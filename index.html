@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CraftCalc - Minecraft Resource Calculator</title>
+  <meta
+    name="description"
+    content="Free Minecraft resource calculator. Calculate the materials needed to craft common Minecraft items."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #202124;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 36px;
+    }
+
+    header p {
+      margin: 0;
+      color: #d1d5db;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input,
+    button {
+      width: 100%;
+      padding: 13px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+
+    select,
+    input {
+      border: 1px solid #cbd5e1;
+      margin-bottom: 18px;
+      background: white;
+    }
+
+    button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #results {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #f0fdf4;
+      border-radius: 10px;
+    }
+
+    .resource {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #d1fae5;
+    }
+
+    .resource:last-child {
+      border-bottom: none;
+    }
+
+    .resource-name {
+      font-weight: bold;
+    }
+
+    .resource-amount {
+      font-weight: bold;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      main {
+        margin-top: 25px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>CraftCalc</h1>
+    <p>Minecraft Resource Calculator</p>
+  </header>
+
+  <main>
+
+    <section class="card">
+      <h2>Resource Calculator</h2>
+
+      <label for="item">What do you want to craft?</label>
+
+      <select id="item">
+        <option value="bookshelf">Bookshelves</option>
+        <option value="piston">Pistons</option>
+        <option value="chest">Chests</option>
+        <option value="torch">Torches</option>
+        <option value="crafting_table">Crafting Tables</option>
+      </select>
+
+      <label for="quantity">How many?</label>
+
+      <input
+        id="quantity"
+        type="number"
+        min="1"
+        value="1"
+        placeholder="Enter quantity"
+      >
+
+      <button onclick="calculateResources()">
+        Calculate Resources
+      </button>
+
+      <div id="results">
+        <h3>You need:</h3>
+        <div id="resourceList"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>How CraftCalc Works</h2>
+
+      <p class="note">
+        Enter the item you want to craft and the quantity you need.
+        CraftCalc calculates the basic materials required based on
+        the crafting recipes stored in the calculator.
+      </p>
+
+      <p class="note">
+        This is an independent fan-made tool and is not affiliated
+        with or endorsed by Mojang or Microsoft.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    CraftCalc &copy; 2026
+  </footer>
+
+  <script>
+    const recipes = {
+      bookshelf: {
+        name: "Bookshelves",
+        materials: {
+          "Oak/Other Wood Planks": 6,
+          "Books": 3
+        }
+      },
+
+      piston: {
+        name: "Pistons",
+        materials: {
+          "Wood Planks": 3,
+          "Cobblestone": 4,
+          "Iron Ingot": 1,
+          "Redstone Dust": 1
+        }
+      },
+
+      chest: {
+        name: "Chests",
+        materials: {
+          "Wood Planks": 8
+        }
+      },
+
+      torch: {
+        name: "Torches",
+        materials: {
+          "Coal/Charcoal": 1,
+          "Stick": 1
+        }
+      },
+
+      crafting_table: {
+        name: "Crafting Tables",
+        materials: {
+          "Wood Planks": 4
+        }
+      }
+    };
+
+    function calculateResources() {
+      const item = document.getElementById("item").value;
+      const quantityInput = document.getElementById("quantity");
+      const quantity = Number(quantityInput.value);
+
+      if (!Number.isInteger(quantity) || quantity < 1) {
+        alert("Please enter a whole number greater than 0.");
+        return;
+      }
+
+      const recipe = recipes[item];
+      const resourceList = document.getElementById("resourceList");
+      const results = document.getElementById("results");
+
+      resourceList.innerHTML = "";
+
+      for (const material in recipe.materials) {
+        const amount = recipe.materials[material] * quantity;
+
+        const row = document.createElement("div");
+        row.className = "resource";
+
+        row.innerHTML = `
+          <span class="resource-name">${material}</span>
+          <span class="resource-amount">${amount}</span>
+        `;
+
+        resourceList.appendChild(row);
+      }
+
+      results.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
