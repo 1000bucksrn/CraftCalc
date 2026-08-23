@@ -4,443 +4,529 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CraftCalc — Minecraft Crafting & Build Calculator</title>
-
-<meta name="description"
-content="CraftCalc is a free fan-made Minecraft crafting, build material and tutorial calculator.">
+<title>CraftCalc - Minecraft Build Assistant</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-:root {
-  --bg:#0d120f;
-  --bg2:#121a14;
-  --panel:#18231b;
-  --panel2:#202d23;
-  --panel3:#26352a;
-  --border:#354637;
-  --green:#67c967;
-  --green2:#3f9147;
-  --gold:#e5bd55;
-  --red:#d65c5c;
-  --text:#f1f4ed;
-  --muted:#9eaa9f;
-  --shadow:rgba(0,0,0,.35);
+:root{
+  --bg:#0b100c;
+  --panel:#151d17;
+  --panel2:#1c271e;
+  --panel3:#263328;
+  --border:#3b4b3d;
+  --green:#62c568;
+  --greenDark:#397c40;
+  --gold:#e5bd52;
+  --text:#f2f5ef;
+  --muted:#9da99e;
+  --red:#c95656;
+  --blue:#59a9d5;
 }
 
-* {
+*{
   box-sizing:border-box;
 }
 
-html {
-  scroll-behavior:smooth;
-}
-
-body {
+body{
   margin:0;
-  color:var(--text);
   background:
-    radial-gradient(circle at 50% -10%,#29402d 0,#131c15 35%,var(--bg) 70%);
-  font-family:Arial,Helvetica,sans-serif;
+    radial-gradient(
+      circle at 50% -20%,
+      #29442d 0,
+      #142017 35%,
+      #0b100c 75%
+    );
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
 }
 
-header {
+header{
   position:sticky;
   top:0;
-  z-index:20;
-  background:rgba(13,18,15,.96);
+  z-index:100;
+  background:rgba(11,16,12,.96);
   border-bottom:2px solid var(--border);
   backdrop-filter:blur(8px);
 }
 
-.header-inner {
-  max-width:1150px;
+.header{
+  max-width:1200px;
   margin:auto;
-  padding:17px 20px;
+  padding:16px 20px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:20px;
 }
 
-.logo {
+.logo{
   font-family:"Press Start 2P",monospace;
-  font-size:25px;
-  line-height:1.4;
-  color:white;
-  text-shadow:3px 3px #18231b;
+  font-size:23px;
+  text-shadow:3px 3px #000;
 }
 
-.logo span {
+.logo span{
   color:var(--green);
 }
 
-.tagline {
+.subtitle{
   color:var(--muted);
   font-size:12px;
-  margin-top:5px;
+  margin-top:7px;
 }
 
-nav {
+nav{
   display:flex;
-  gap:8px;
+  gap:7px;
   flex-wrap:wrap;
 }
 
-nav a {
-  color:var(--text);
-  text-decoration:none;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:7px;
-  padding:9px 12px;
-  font-size:13px;
-}
-
-nav a:hover {
-  border-color:var(--green);
-  color:var(--green);
-}
-
-main {
-  max-width:1150px;
-  margin:auto;
-  padding:35px 20px 70px;
-}
-
-.hero {
-  text-align:center;
-  padding:35px 10px 25px;
-}
-
-.hero h1 {
-  margin:0;
-  font-size:clamp(27px,5vw,45px);
-}
-
-.hero p {
-  max-width:700px;
-  margin:17px auto 0;
-  color:var(--muted);
-  line-height:1.65;
-}
-
-.search-box {
-  max-width:850px;
-  margin:30px auto 0;
-  position:relative;
-}
-
-.search-box input {
-  width:100%;
-  padding:19px 20px;
-  background:var(--panel);
-  border:2px solid var(--border);
-  border-radius:11px;
-  color:white;
-  font-size:17px;
-  outline:none;
-}
-
-.search-box input:focus {
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(103,201,103,.1);
-}
-
-.search-hint {
-  margin-top:9px;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.section {
-  margin-top:38px;
-}
-
-.section-title {
-  margin:0 0 15px;
-  font-size:24px;
-}
-
-.panel {
-  background:linear-gradient(145deg,var(--panel),#131b15);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:24px;
-  box-shadow:0 12px 30px var(--shadow);
-}
-
-.edition-buttons {
-  display:flex;
-  gap:8px;
-  margin:15px 0;
-}
-
-.edition-buttons button {
-  background:var(--panel2);
-  border:1px solid var(--border);
-  color:var(--muted);
-}
-
-.edition-buttons button.active {
-  background:var(--green2);
-  color:white;
-  border-color:var(--green);
-}
-
-.calculator-controls {
-  display:grid;
-  grid-template-columns:1fr 150px 140px;
-  gap:10px;
-}
-
-select,
-input[type="number"] {
-  width:100%;
-  padding:13px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:white;
-  font-size:15px;
-}
-
-button {
+button{
   border:0;
-  border-radius:8px;
-  padding:12px 15px;
-  background:var(--green2);
+  border-radius:7px;
+  padding:11px 14px;
+  background:var(--greenDark);
   color:white;
   font-weight:bold;
   cursor:pointer;
 }
 
-button:hover {
+button:hover{
   background:var(--green);
-  color:#081008;
+  color:#071008;
 }
 
-.results {
-  display:none;
-  margin-top:20px;
-  padding:20px;
-  border-radius:10px;
-  background:#0e1610;
+button.secondary{
+  background:var(--panel2);
   border:1px solid var(--border);
 }
 
-.results-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  flex-wrap:wrap;
+button.danger{
+  background:var(--red);
 }
 
-.results-header h3 {
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:30px 20px 80px;
+}
+
+.hero{
+  text-align:center;
+  padding:40px 10px 25px;
+}
+
+.hero h1{
+  font-size:clamp(28px,5vw,48px);
   margin:0;
 }
 
-.material-row {
-  display:flex;
-  justify-content:space-between;
-  padding:11px 0;
-  border-bottom:1px solid var(--border);
+.hero p{
+  color:var(--muted);
+  max-width:700px;
+  margin:15px auto;
+  line-height:1.7;
 }
 
-.material-row:last-child {
+.search-box{
+  max-width:850px;
+  margin:28px auto 0;
+}
+
+.search-box input{
+  width:100%;
+  padding:20px;
+  border:2px solid var(--border);
+  border-radius:12px;
+  background:var(--panel);
+  color:white;
+  font-size:18px;
+  outline:none;
+}
+
+.search-box input:focus{
+  border-color:var(--green);
+}
+
+.search-help{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.section{
+  margin-top:35px;
+}
+
+.section-title{
+  font-size:24px;
+  margin-bottom:15px;
+}
+
+.panel{
+  background:linear-gradient(145deg,var(--panel),#101711);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:22px;
+}
+
+.search-results{
+  display:none;
+}
+
+.result{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+.result:hover{
+  border-color:#526955;
+}
+
+.result-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.result-header h3{
+  margin:0;
+  font-size:21px;
+}
+
+.badge{
+  background:var(--panel3);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:5px 8px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.result-description{
+  color:var(--muted);
+  margin:9px 0;
+  line-height:1.5;
+}
+
+/* SEARCH RECIPE */
+
+.recipe-result{
+  margin-top:18px;
+  background:#101811;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px;
+}
+
+.recipe-layout{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  gap:25px;
+}
+
+.crafting-table{
+  background:#895f39;
+  border:5px solid #4f3521;
+  border-radius:8px;
+  padding:9px;
+}
+
+.crafting-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+}
+
+.slot{
+  aspect-ratio:1;
+  background:#b58251;
+  border:2px solid #68462a;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.slot.filled{
+  background:#98704b;
+}
+
+.slot-icon{
+  font-size:25px;
+}
+
+.slot-name{
+  position:absolute;
+  bottom:3px;
+  left:2px;
+  right:2px;
+  text-align:center;
+  font-size:8px;
+  line-height:1;
+  color:white;
+  text-shadow:1px 1px #000;
+}
+
+.output{
+  text-align:center;
+  margin-top:12px;
+  font-weight:bold;
+  color:var(--gold);
+}
+
+.materials{
+  margin-top:12px;
+}
+
+.material{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  padding:10px 0;
+}
+
+.material:last-child{
   border-bottom:0;
 }
 
-.material-count {
+.material-amount{
   color:var(--gold);
   font-weight:bold;
 }
 
-.stack-note {
-  color:var(--muted);
-  font-size:12px;
-  margin-top:12px;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.card {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:11px;
-  padding:18px;
-  transition:.15s;
-}
-
-.card:hover {
-  transform:translateY(-2px);
-  border-color:var(--green2);
-}
-
-.card h3 {
-  margin:0 0 9px;
-}
-
-.card p {
-  color:var(--muted);
-  line-height:1.5;
-  font-size:14px;
-}
-
-.card-meta {
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin:10px 0;
-}
-
-.tag {
-  display:inline-block;
-  padding:5px 7px;
-  border-radius:5px;
-  background:var(--panel3);
-  border:1px solid var(--border);
+.small{
   color:var(--muted);
   font-size:11px;
 }
 
-.card button {
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:15px;
+}
+
+.actions button{
+  flex:1;
+  min-width:120px;
+}
+
+/* CONTROLS */
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr 140px;
+  gap:10px;
+}
+
+input,
+textarea,
+select{
   width:100%;
-  margin-top:8px;
-}
-
-.secondary {
   background:var(--panel2);
-  color:var(--text);
   border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px;
+  color:white;
+  font-size:15px;
+  outline:none;
 }
 
-.search-results {
-  display:none;
+textarea{
+  min-height:120px;
+  resize:vertical;
 }
 
-.search-result-card {
-  margin-bottom:10px;
-  padding:16px;
+/* GENERAL GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.card{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:11px;
+  padding:18px;
 }
 
-.search-result-card h3 {
-  margin:0 0 7px;
+.card h3{
+  margin-top:0;
 }
 
-.search-result-card p {
-  margin:0;
+.card p{
   color:var(--muted);
   font-size:14px;
+  line-height:1.5;
 }
 
-.search-result-actions {
+.tags{
   display:flex;
-  gap:8px;
+  gap:6px;
   flex-wrap:wrap;
-  margin-top:12px;
+  margin:10px 0;
 }
 
-.tutorial-category {
-  margin-top:25px;
+/* CHECKLIST */
+
+.progress{
+  height:10px;
+  background:#080c09;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:8px;
 }
 
-.category-title {
-  margin-bottom:12px;
-  color:var(--green);
+.progress-bar{
+  width:0;
+  height:100%;
+  background:var(--green);
+  transition:.2s;
 }
 
-.empty {
+.progress-text{
   color:var(--muted);
-  padding:20px;
+  font-size:12px;
+  margin-bottom:15px;
+}
+
+.check-item{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:7px;
+  margin-bottom:7px;
+}
+
+.check-item input{
+  width:auto;
+}
+
+.check-item.done span{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+
+.empty{
+  padding:18px;
+  color:var(--muted);
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:9px;
 }
 
-.disclaimer {
-  margin-top:45px;
-  padding:15px;
+.notice{
+  background:#201e13;
   border:1px solid #514a2d;
-  background:#211f14;
-  color:#c8c19f;
-  border-radius:9px;
+  border-radius:8px;
+  padding:13px;
+  color:#c9c29e;
   font-size:12px;
   line-height:1.6;
+  margin-top:35px;
 }
 
-footer {
-  border-top:1px solid var(--border);
-  padding:25px 20px;
+footer{
   text-align:center;
+  border-top:1px solid var(--border);
   color:var(--muted);
+  padding:25px;
   font-size:12px;
 }
 
-.hidden {
-  display:none !important;
-}
+/* MOBILE */
 
-@media(max-width:800px) {
-  .calculator-controls {
+@media(max-width:800px){
+
+  .header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .recipe-layout{
     grid-template-columns:1fr;
   }
 
-  .grid {
+  .grid{
     grid-template-columns:1fr 1fr;
   }
 
-  .header-inner {
-    align-items:flex-start;
-    flex-direction:column;
-  }
 }
 
-@media(max-width:520px) {
-  .grid {
+@media(max-width:550px){
+
+  main{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .grid{
     grid-template-columns:1fr;
   }
 
-  main {
-    padding:20px 13px 50px;
+  .controls{
+    grid-template-columns:1fr;
   }
 
-  .panel {
-    padding:17px;
+  .logo{
+    font-size:18px;
   }
 
-  .logo {
-    font-size:20px;
-  }
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-inner">
+
+  <div class="header">
 
     <div>
-      <div class="logo">CRAFT<span>CALC</span></div>
-      <div class="tagline">Craft smarter. Build faster.</div>
+      <div class="logo">
+        CRAFT<span>CALC</span>
+      </div>
+
+      <div class="subtitle">
+        Craft smarter. Build faster.
+      </div>
     </div>
 
     <nav>
-      <a href="#calculator">Calculator</a>
-      <a href="#tutorials">Tutorials</a>
-      <a href="#farms">Farms</a>
+
+      <button onclick="go('planner')">
+        Build Planner
+      </button>
+
+      <button onclick="go('checklist')">
+        Checklist
+      </button>
+
+      <button onclick="go('tutorials')">
+        Tutorials
+      </button>
+
+      <button onclick="go('farms')">
+        Farms
+      </button>
+
     </nav>
 
   </div>
+
 </header>
 
 
@@ -448,24 +534,24 @@ footer {
 
 <section class="hero">
 
-  <h1>Everything You Need to Build</h1>
+  <h1>Minecraft Build Assistant</h1>
 
   <p>
-    Search recipes, calculate materials, find farms and
-    discover Minecraft tutorials in one place.
+    Search a block, recipe, farm or build.
+    Calculate exactly what you need and keep track
+    of everything you're collecting.
   </p>
 
   <div class="search-box">
 
     <input
-      id="siteSearch"
-      type="text"
-      placeholder="Try: iron farm, bone meal, piston, XP farm..."
+      id="search"
+      placeholder="Search Minecraft... try Chest, 64 hoppers, iron farm, bone meal..."
       autocomplete="off"
     >
 
-    <div class="search-hint">
-      Search recipes, farms, builds and tutorials.
+    <div class="search-help">
+      Try searching naturally — CraftCalc understands quantities too.
     </div>
 
   </div>
@@ -473,164 +559,301 @@ footer {
 </section>
 
 
-<!-- SEARCH RESULTS -->
+<!-- =========================
+     MAIN SEARCH RESULTS
+========================= -->
 
-<section id="searchSection" class="section search-results">
+<section
+  id="searchSection"
+  class="section search-results">
 
-  <h2 class="section-title">🔎 Search Results</h2>
+  <h2 class="section-title">
+    🔎 Search Results
+  </h2>
 
   <div id="searchResults"></div>
 
 </section>
 
 
-<!-- CALCULATOR -->
+<!-- =========================
+     BUILD PLANNER
+========================= -->
 
-<section id="calculator" class="section">
+<section
+  id="planner"
+  class="section">
 
-  <h2 class="section-title">🧮 Material Calculator</h2>
+  <h2 class="section-title">
+    🏗️ Build Planner
+  </h2>
 
   <div class="panel">
 
-    <div class="edition-buttons">
+    <p style="color:var(--muted)">
+      Make your own material checklist for any build.
+    </p>
 
-      <button
-        id="javaBtn"
-        class="active"
-        onclick="setEdition('Java')">
-        Java
-      </button>
+    <input
+      id="buildName"
+      placeholder="Build name — e.g. Medieval Castle"
+    >
 
-      <button
-        id="bedrockBtn"
-        onclick="setEdition('Bedrock')">
-        Bedrock
-      </button>
+    <textarea
+      id="buildMaterials"
+      placeholder="Enter materials like:
 
-    </div>
+500 stone
+128 oak planks
+64 glass
+32 iron
+12 hoppers"
+      style="margin-top:10px"
+    ></textarea>
 
-    <div class="calculator-controls">
-
-      <select id="recipeSelect"></select>
-
-      <input
-        id="quantity"
-        type="number"
-        min="1"
-        value="1"
-      >
-
-      <button onclick="calculateRecipe()">
-        Calculate
-      </button>
-
-    </div>
-
-    <div id="calculatorResults" class="results"></div>
+    <button
+      onclick="createChecklist()"
+      style="margin-top:10px"
+    >
+      Create Checklist
+    </button>
 
   </div>
 
 </section>
 
 
-<!-- TUTORIALS -->
+<!-- =========================
+     CHECKLIST
+========================= -->
 
-<section id="tutorials" class="section">
+<section
+  id="checklist"
+  class="section">
 
-  <h2 class="section-title">🎥 Tutorials</h2>
+  <h2 class="section-title">
+    ☑️ Build Checklist
+  </h2>
 
-  <div id="tutorialCategories"></div>
+  <div class="panel">
+
+    <div class="progress">
+      <div
+        id="progressBar"
+        class="progress-bar">
+      </div>
+    </div>
+
+    <div
+      id="progressText"
+      class="progress-text">
+      No checklist yet
+    </div>
+
+    <div id="checklistContent">
+
+      <div class="empty">
+        Create a build checklist to get started.
+      </div>
+
+    </div>
+
+    <button
+      class="danger"
+      onclick="clearChecklist()"
+      style="margin-top:15px"
+    >
+      Clear Checklist
+    </button>
+
+  </div>
 
 </section>
 
 
-<!-- FARMS -->
+<!-- =========================
+     WHAT CAN I BUILD
+========================= -->
 
-<section id="farms" class="section">
+<section class="section">
 
-  <h2 class="section-title">🌱 Farm & Build Finder</h2>
+  <h2 class="section-title">
+    🎒 What Can I Build?
+  </h2>
 
-  <div id="farmGrid" class="grid"></div>
+  <div class="panel">
+
+    <p style="color:var(--muted)">
+      Tell CraftCalc what you already have.
+    </p>
+
+    <textarea
+      id="inventory"
+      placeholder="32 iron
+64 oak planks
+128 cobblestone
+20 sticks"
+    ></textarea>
+
+    <button
+      onclick="findBuilds()"
+      style="margin-top:10px"
+    >
+      Find Builds
+    </button>
+
+    <div
+      id="buildResults"
+      style="margin-top:15px">
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- RECIPES -->
+<!-- =========================
+     FARMS
+========================= -->
 
-<section id="recipes" class="section">
+<section
+  id="farms"
+  class="section">
 
-  <h2 class="section-title">📖 Recipes</h2>
+  <h2 class="section-title">
+    🌱 Farm Finder
+  </h2>
 
-  <div id="recipeGrid" class="grid"></div>
+  <div
+    id="farmGrid"
+    class="grid">
+  </div>
 
 </section>
 
 
-<div class="disclaimer">
-  CraftCalc is an independent fan-made project and is not affiliated
-  with, endorsed by, or sponsored by Mojang Studios or Microsoft.
-  Minecraft is a trademark of Microsoft.
+<!-- =========================
+     TUTORIALS
+========================= -->
+
+<section
+  id="tutorials"
+  class="section">
+
+  <h2 class="section-title">
+    🎥 Minecraft Tutorials
+  </h2>
+
+  <div
+    id="tutorialGrid"
+    class="grid">
+  </div>
+
+</section>
+
+
+<div class="notice">
+
+  CraftCalc is an independent fan-made project and is not
+  affiliated with, endorsed by, or sponsored by Mojang Studios
+  or Microsoft. Minecraft is a trademark of Microsoft.
+
 </div>
 
 </main>
 
 
 <footer>
-  CraftCalc © 2026 · Independent fan-made utility
+  CraftCalc © 2026
 </footer>
 
 
 <script>
 
-/* ============================================================
-   CRAFTCALC DATA
-   ============================================================
+/* =========================================================
+   RECIPE DATABASE
+   Recipes ONLY appear through SEARCH.
+   There is NO separate recipe section.
+========================================================= */
 
-   Recipes, tutorials and farms are kept separately so they
-   can be expanded without rewriting the website.
+const recipes = [
 
-   A tutorial can have an exact verified material list.
-   If materials are not verified, materials stays null.
-   ============================================================ */
-
-
-/* -----------------------------
-   RECIPES
------------------------------ */
-
-const recipes = {
-
-  crafting_table: {
-    name:"Crafting Table",
-    materials:{
-      "Wood Planks":4
-    }
-  },
-
-  chest:{
+  {
     name:"Chest",
+    aliases:["chest","storage"],
+    output:1,
+
+    grid:[
+      ["Wood Planks","Wood Planks","Wood Planks"],
+      ["Wood Planks","","Wood Planks"],
+      ["Wood Planks","Wood Planks","Wood Planks"]
+    ],
+
     materials:{
       "Wood Planks":8
     }
   },
 
-  furnace:{
+  {
+    name:"Crafting Table",
+    aliases:["crafting table","workbench"],
+    output:1,
+
+    grid:[
+      ["Wood Planks","Wood Planks",""],
+      ["Wood Planks","Wood Planks",""],
+      ["","",""]
+    ],
+
+    materials:{
+      "Wood Planks":4
+    }
+  },
+
+  {
     name:"Furnace",
+    aliases:["furnace"],
+    output:1,
+
+    grid:[
+      ["Cobblestone","Cobblestone","Cobblestone"],
+      ["Cobblestone","","Cobblestone"],
+      ["Cobblestone","Cobblestone","Cobblestone"]
+    ],
+
     materials:{
       "Cobblestone":8
     }
   },
 
-  torch:{
+  {
     name:"Torch",
+    aliases:["torch","torches"],
+    output:4,
+
+    grid:[
+      ["Coal","",""],
+      ["Stick","",""],
+      ["","",""]
+    ],
+
     materials:{
       "Coal":1,
       "Stick":1
     }
   },
 
-  piston:{
+  {
     name:"Piston",
+    aliases:["piston","pistons"],
+    output:1,
+
+    grid:[
+      ["Wood Planks","Wood Planks","Wood Planks"],
+      ["Cobblestone","Iron Ingot","Cobblestone"],
+      ["Cobblestone","Redstone Dust","Cobblestone"]
+    ],
+
     materials:{
       "Wood Planks":3,
       "Cobblestone":4,
@@ -639,46 +862,100 @@ const recipes = {
     }
   },
 
-  hopper:{
+  {
     name:"Hopper",
+    aliases:["hopper","hoppers"],
+    output:1,
+
+    grid:[
+      ["Iron Ingot","","Iron Ingot"],
+      ["Iron Ingot","Chest","Iron Ingot"],
+      ["","Iron Ingot",""]
+    ],
+
     materials:{
       "Iron Ingot":5,
       "Chest":1
     }
   },
 
-  shield:{
+  {
+    name:"Bucket",
+    aliases:["bucket","buckets"],
+    output:1,
+
+    grid:[
+      ["Iron Ingot","","Iron Ingot"],
+      ["","Iron Ingot",""],
+      ["","",""]
+    ],
+
+    materials:{
+      "Iron Ingot":3
+    }
+  },
+
+  {
+    name:"Ladder",
+    aliases:["ladder","ladders"],
+    output:3,
+
+    grid:[
+      ["Stick","","Stick"],
+      ["Stick","Stick","Stick"],
+      ["Stick","","Stick"]
+    ],
+
+    materials:{
+      "Stick":7
+    }
+  },
+
+  {
     name:"Shield",
+    aliases:["shield","shields"],
+    output:1,
+
+    grid:[
+      ["Wood Planks","Iron Ingot","Wood Planks"],
+      ["Wood Planks","Wood Planks","Wood Planks"],
+      ["","Wood Planks",""]
+    ],
+
     materials:{
       "Wood Planks":6,
       "Iron Ingot":1
     }
   },
 
-  bucket:{
-    name:"Bucket",
-    materials:{
-      "Iron Ingot":3
-    }
-  },
-
-  ladder:{
-    name:"Ladder",
-    materials:{
-      "Stick":7
-    }
-  },
-
-  bow:{
+  {
     name:"Bow",
+    aliases:["bow","bows"],
+    output:1,
+
+    grid:[
+      ["","Stick","String"],
+      ["Stick","","String"],
+      ["","Stick","String"]
+    ],
+
     materials:{
       "Stick":3,
       "String":3
     }
   },
 
-  arrow:{
+  {
     name:"Arrow",
+    aliases:["arrow","arrows"],
+    output:4,
+
+    grid:[
+      ["Flint","",""],
+      ["Stick","",""],
+      ["Feather","",""]
+    ],
+
     materials:{
       "Flint":1,
       "Stick":1,
@@ -686,662 +963,545 @@ const recipes = {
     }
   },
 
-  bread:{
+  {
     name:"Bread",
+    aliases:["bread"],
+    output:1,
+
+    grid:[
+      ["Wheat","Wheat","Wheat"],
+      ["","",""],
+      ["","",""]
+    ],
+
     materials:{
       "Wheat":3
     }
   },
 
-  paper:{
+  {
     name:"Paper",
+    aliases:["paper"],
+    output:3,
+
+    grid:[
+      ["Sugar Cane","Sugar Cane","Sugar Cane"],
+      ["","",""],
+      ["","",""]
+    ],
+
     materials:{
       "Sugar Cane":3
     }
   },
 
-  book:{
+  {
     name:"Book",
+    aliases:["book","books"],
+    output:1,
+
+    grid:[
+      ["Paper","Paper",""],
+      ["Paper","Leather",""],
+      ["","",""]
+    ],
+
     materials:{
       "Paper":3,
       "Leather":1
     }
   },
 
-  bookshelf:{
+  {
     name:"Bookshelf",
+    aliases:["bookshelf","bookshelves"],
+    output:1,
+
+    grid:[
+      ["Wood Planks","Wood Planks","Wood Planks"],
+      ["Book","Book","Book"],
+      ["Wood Planks","Wood Planks","Wood Planks"]
+    ],
+
     materials:{
       "Wood Planks":6,
       "Book":3
     }
-  },
-
-  glass_pane:{
-    name:"Glass Pane",
-    materials:{
-      "Glass":6
-    }
-  }
-
-};
-
-
-/* -----------------------------
-   TUTORIALS
------------------------------ */
-
-const tutorials = [
-
-  {
-    title:"Bone Meal Farm",
-    category:"Bone Meal",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft bone meal farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+bone+meal+farm+tutorial"
-  },
-
-  {
-    title:"Iron Farm",
-    category:"Iron",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft iron farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+iron+farm+tutorial"
-  },
-
-  {
-    title:"XP Farm",
-    category:"XP",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft XP farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+XP+farm+tutorial"
-  },
-
-  {
-    title:"Gold Farm",
-    category:"Gold",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Hard",
-    query:"Minecraft gold farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+gold+farm+tutorial"
-  },
-
-  {
-    title:"Mob Farm",
-    category:"Mob",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft mob farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+mob+farm+tutorial"
-  },
-
-  {
-    title:"Food Farm",
-    category:"Food",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft automatic food farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+automatic+food+farm+tutorial"
-  },
-
-  {
-    title:"Wheat Farm",
-    category:"Food",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft automatic wheat farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+automatic+wheat+farm+tutorial"
-  },
-
-  {
-    title:"Sugar Cane Farm",
-    category:"Farming",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft automatic sugar cane farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+sugar+cane+farm+tutorial"
-  },
-
-  {
-    title:"Wood Farm",
-    category:"Wood",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft wood farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+wood+farm+tutorial"
-  },
-
-  {
-    title:"Villager Trading Hall",
-    category:"Villager",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft villager trading hall tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+villager+trading+hall+tutorial"
-  },
-
-  {
-    title:"Raid Farm",
-    category:"Villager",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Hard",
-    query:"Minecraft raid farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+raid+farm+tutorial"
-  },
-
-  {
-    title:"Creeper Farm",
-    category:"Mob",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft creeper farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+creeper+farm+tutorial"
-  },
-
-  {
-    title:"Slime Farm",
-    category:"Mob",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Hard",
-    query:"Minecraft slime farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+slime+farm+tutorial"
-  },
-
-  {
-    title:"Redstone Door",
-    category:"Redstone",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Easy",
-    query:"Minecraft redstone door tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+redstone+door+tutorial"
-  },
-
-  {
-    title:"Automatic Storage System",
-    category:"Redstone",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Hard",
-    query:"Minecraft automatic storage system tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+automatic+storage+system+tutorial"
-  },
-
-  {
-    title:"Starter House",
-    category:"Starter Builds",
-    edition:"Java / Bedrock",
-    version:"Any",
-    difficulty:"Easy",
-    query:"Minecraft starter house tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+starter+house+tutorial"
-  },
-
-  {
-    title:"Medieval House",
-    category:"Starter Builds",
-    edition:"Java / Bedrock",
-    version:"Any",
-    difficulty:"Medium",
-    query:"Minecraft medieval house tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+medieval+house+tutorial"
-  },
-
-  {
-    title:"Nether Portal Build",
-    category:"Nether",
-    edition:"Java / Bedrock",
-    version:"Any",
-    difficulty:"Easy",
-    query:"Minecraft Nether portal build tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+Nether+portal+build+tutorial"
-  },
-
-  {
-    title:"Enderman XP Farm",
-    category:"End",
-    edition:"Java / Bedrock",
-    version:"Check video",
-    difficulty:"Medium",
-    query:"Minecraft Enderman XP farm tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+Enderman+XP+farm+tutorial"
-  },
-
-  {
-    title:"Automatic Furnace",
-    category:"Redstone",
-    edition:"Java / Bedrock",
-    version:"Any",
-    difficulty:"Easy",
-    query:"Minecraft automatic furnace tutorial",
-    url:"https://www.youtube.com/results?search_query=Minecraft+automatic+furnace+tutorial"
   }
 
 ];
 
 
-/* -----------------------------
-   FARMS / BUILDS
------------------------------ */
+/* =========================================================
+   FARMS
+========================================================= */
 
-const farms = [
-
-  {
-    name:"Bone Meal Farm",
-    category:"Bone Meal",
-    edition:"Java / Bedrock",
-    difficulty:"Easy",
-    description:"Find tutorials for automatic bone meal production.",
-    tutorialSearch:"Minecraft bone meal farm tutorial",
-    materials:null
-  },
+const farms=[
 
   {
     name:"Iron Farm",
-    category:"Iron",
-    edition:"Java / Bedrock",
+    type:"Iron",
     difficulty:"Easy",
-    description:"Automatic iron production using villagers and a farm setup.",
-    tutorialSearch:"Minecraft iron farm tutorial",
-    materials:null
+    query:"Minecraft iron farm tutorial"
   },
 
   {
-    name:"XP Farm",
-    category:"XP",
-    edition:"Java / Bedrock",
-    difficulty:"Medium",
-    description:"Find an XP farm that matches your edition and version.",
-    tutorialSearch:"Minecraft XP farm tutorial",
-    materials:null
+    name:"Bone Meal Farm",
+    type:"Bone Meal",
+    difficulty:"Easy",
+    query:"Minecraft bone meal farm tutorial"
   },
 
   {
     name:"Creeper Farm",
-    category:"Mob",
-    edition:"Java / Bedrock",
+    type:"Gunpowder",
     difficulty:"Medium",
-    description:"Automatic gunpowder production.",
-    tutorialSearch:"Minecraft creeper farm tutorial",
-    materials:null
+    query:"Minecraft creeper farm tutorial"
+  },
+
+  {
+    name:"XP Farm",
+    type:"XP",
+    difficulty:"Medium",
+    query:"Minecraft XP farm tutorial"
   },
 
   {
     name:"Gold Farm",
-    category:"Gold",
-    edition:"Java / Bedrock",
+    type:"Gold",
     difficulty:"Hard",
-    description:"Automatic gold and experience production.",
-    tutorialSearch:"Minecraft gold farm tutorial",
-    materials:null
+    query:"Minecraft gold farm tutorial"
   },
 
   {
     name:"Sugar Cane Farm",
-    category:"Farming",
-    edition:"Java / Bedrock",
+    type:"Sugar Cane",
     difficulty:"Easy",
-    description:"Automatic sugar cane production.",
-    tutorialSearch:"Minecraft automatic sugar cane farm tutorial",
-    materials:null
+    query:"Minecraft automatic sugar cane farm tutorial"
+  },
+
+  {
+    name:"Wheat Farm",
+    type:"Food",
+    difficulty:"Easy",
+    query:"Minecraft automatic wheat farm tutorial"
+  },
+
+  {
+    name:"Slime Farm",
+    type:"Slime",
+    difficulty:"Hard",
+    query:"Minecraft slime farm tutorial"
+  },
+
+  {
+    name:"Raid Farm",
+    type:"Totems / Emeralds",
+    difficulty:"Hard",
+    query:"Minecraft raid farm tutorial"
   }
 
 ];
 
 
-/* ============================================================
-   APP STATE
-============================================================ */
+/* =========================================================
+   TUTORIALS
+========================================================= */
 
-let currentEdition = "Java";
+const tutorials=[
 
+  ["Iron Farm","iron farm tutorial"],
+  ["Bone Meal Farm","bone meal farm tutorial"],
+  ["Creeper Farm","creeper farm tutorial"],
+  ["XP Farm","XP farm tutorial"],
+  ["Gold Farm","gold farm tutorial"],
+  ["Sugar Cane Farm","automatic sugar cane farm tutorial"],
+  ["Wheat Farm","automatic wheat farm tutorial"],
+  ["Slime Farm","slime farm tutorial"],
+  ["Raid Farm","raid farm tutorial"],
+  ["Villager Trading Hall","villager trading hall tutorial"],
+  ["Starter House","Minecraft starter house tutorial"],
+  ["Medieval House","Minecraft medieval house tutorial"],
+  ["Castle","Minecraft castle build tutorial"],
+  ["Redstone Door","Minecraft redstone door tutorial"],
+  ["Storage System","Minecraft automatic storage tutorial"]
 
-/* ============================================================
-   INITIALIZATION
-============================================================ */
-
-function init() {
-
-  populateRecipeSelect();
-
-  renderRecipes();
-
-  renderTutorials();
-
-  renderFarms();
-
-  setupSearch();
-
-}
-
-
-/* ============================================================
-   EDITION
-============================================================ */
-
-function setEdition(edition) {
-
-  currentEdition = edition;
-
-  document
-    .getElementById("javaBtn")
-    .classList.toggle("active",edition === "Java");
-
-  document
-    .getElementById("bedrockBtn")
-    .classList.toggle("active",edition === "Bedrock");
-
-}
+];
 
 
-/* ============================================================
-   RECIPE SELECT
-============================================================ */
+/* =========================================================
+   SEARCH
+========================================================= */
 
-function populateRecipeSelect() {
-
-  const select =
-    document.getElementById("recipeSelect");
-
-  select.innerHTML =
-    Object.entries(recipes)
-      .sort((a,b)=>
-        a[1].name.localeCompare(b[1].name)
-      )
-      .map(([id,recipe])=>
-        `<option value="${id}">
-          ${recipe.name}
-        </option>`
-      )
-      .join("");
-
-}
+document
+  .getElementById("search")
+  .addEventListener(
+    "input",
+    runSearch
+  );
 
 
-/* ============================================================
-   CALCULATOR
-============================================================ */
+function runSearch(){
 
-function calculateRecipe() {
+  const raw=
+    document
+      .getElementById("search")
+      .value
+      .trim();
 
-  const id =
-    document.getElementById("recipeSelect").value;
-
-  const quantity =
-    Math.max(
-      1,
-      Number(
-        document.getElementById("quantity").value
-      ) || 1
+  const section=
+    document.getElementById(
+      "searchSection"
     );
 
-  const recipe = recipes[id];
+  if(!raw){
 
-  if (!recipe) return;
-
-  const rows =
-    Object.entries(recipe.materials)
-      .map(([material,amount])=>{
-
-        const total =
-          amount * quantity;
-
-        return `
-          <div class="material-row">
-
-            <span>${material}</span>
-
-            <span class="material-count">
-              ${formatNumber(total)}
-            </span>
-
-          </div>
-        `;
-
-      })
-      .join("");
-
-  const totalProducts =
-    quantity;
-
-  document.getElementById(
-    "calculatorResults"
-  ).innerHTML = `
-
-    <div class="results-header">
-
-      <h3>
-        ${formatNumber(totalProducts)}
-        × ${recipe.name}
-      </h3>
-
-      <span class="tag">
-        ${currentEdition}
-      </span>
-
-    </div>
-
-    <div style="margin-top:12px">
-      ${rows}
-    </div>
-
-    <div class="stack-note">
-      Numbers are recipe ingredients before
-      converting nested ingredients into raw materials.
-    </div>
-
-  `;
-
-  document.getElementById(
-    "calculatorResults"
-  ).style.display = "block";
-
-}
-
-
-/* ============================================================
-   RECIPE CARDS
-============================================================ */
-
-function renderRecipes(filter="") {
-
-  const grid =
-    document.getElementById("recipeGrid");
-
-  const normalized =
-    filter.toLowerCase();
-
-  const matches =
-    Object.entries(recipes)
-      .filter(([id,recipe])=>
-        recipe.name
-          .toLowerCase()
-          .includes(normalized)
-      );
-
-  if (!matches.length) {
-
-    grid.innerHTML =
-      `<div class="empty">
-        No recipes found.
-      </div>`;
+    section.style.display="none";
 
     return;
+
   }
 
-  grid.innerHTML =
-    matches.map(([id,recipe])=>`
+  section.style.display="block";
 
-      <div class="card">
+  let query=raw.toLowerCase();
 
-        <h3>${recipe.name}</h3>
+  let quantity=1;
 
-        <p>
-          ${Object.entries(recipe.materials)
-            .map(([name,count])=>
-              `${count} ${name}`
-            )
-            .join(" · ")}
+  const amountMatch=
+    raw.match(/^(\d+)\s+(.+)$/);
+
+  if(amountMatch){
+
+    quantity=
+      Number(amountMatch[1]);
+
+    query=
+      amountMatch[2].toLowerCase();
+
+  }
+
+  let html="";
+
+  /* RECIPES */
+
+  const recipeMatches=
+    recipes.filter(recipe=>
+      recipe.name.toLowerCase().includes(query) ||
+      recipe.aliases.some(alias=>
+        alias.includes(query) ||
+        query.includes(alias)
+      )
+    );
+
+  recipeMatches.forEach(recipe=>{
+
+    html+=recipeResult(
+      recipe,
+      quantity
+    );
+
+  });
+
+
+  /* FARMS */
+
+  const farmMatches=
+    farms.filter(f=>
+      (
+        f.name+
+        " "+
+        f.type
+      )
+      .toLowerCase()
+      .includes(query)
+    );
+
+  farmMatches.forEach(farm=>{
+
+    html+=`
+
+      <div class="result">
+
+        <div class="result-header">
+
+          <h3>🌱 ${farm.name}</h3>
+
+          <span class="badge">
+            ${farm.difficulty}
+          </span>
+
+        </div>
+
+        <p class="result-description">
+          ${farm.type} farm · Java / Bedrock
+        </p>
+
+        <div class="actions">
+
+          <button
+            onclick="youtube('${escapeAttr(farm.query)}')">
+            Find YouTube Tutorials
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  /* TUTORIALS */
+
+  const tutorialMatches=
+    tutorials.filter(t=>
+      (
+        t[0]+
+        " "+
+        t[1]
+      )
+      .toLowerCase()
+      .includes(query)
+    );
+
+  tutorialMatches.forEach(t=>{
+
+    html+=`
+
+      <div class="result">
+
+        <div class="result-header">
+
+          <h3>🎥 ${t[0]}</h3>
+
+          <span class="badge">
+            Tutorial
+          </span>
+
+        </div>
+
+        <p class="result-description">
+          Find Minecraft tutorials for this build.
         </p>
 
         <button
-          onclick="useRecipe('${id}')">
-          Calculate
+          onclick="youtube('${escapeAttr(t[1])}')">
+          Search YouTube
         </button>
 
       </div>
 
-    `).join("");
+    `;
 
-}
-
-
-function useRecipe(id) {
-
-  document.getElementById(
-    "recipeSelect"
-  ).value = id;
-
-  document.getElementById(
-    "quantity"
-  ).value = 1;
-
-  document.getElementById(
-    "calculator"
-  ).scrollIntoView({
-    behavior:"smooth"
   });
 
-  calculateRecipe();
+
+  if(!html){
+
+    html=`
+
+      <div class="empty">
+
+        No exact CraftCalc result yet.
+
+        <div class="actions">
+
+          <button
+            onclick="youtube('${escapeAttr(raw+" Minecraft tutorial")}')">
+            Search YouTube
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+  document.getElementById(
+    "searchResults"
+  ).innerHTML=html;
 
 }
 
 
-/* ============================================================
-   TUTORIALS
-============================================================ */
+/* =========================================================
+   SEARCH RECIPE RESULT
+========================================================= */
 
-function renderTutorials(filter="") {
+function recipeResult(recipe,quantity){
 
-  const container =
-    document.getElementById(
-      "tutorialCategories"
+  let grid="";
+
+  recipe.grid.forEach(row=>{
+
+    row.forEach(item=>{
+
+      if(!item){
+
+        grid+=`
+          <div class="slot"></div>
+        `;
+
+      }else{
+
+        grid+=`
+
+          <div class="slot filled">
+
+            <div class="slot-icon">
+              ${icon(item)}
+            </div>
+
+            <div class="slot-name">
+              ${item}
+            </div>
+
+          </div>
+
+        `;
+
+      }
+
+    });
+
+  });
+
+
+  const batches=
+    Math.ceil(
+      quantity/
+      recipe.output
     );
 
-  let matches =
-    tutorials;
 
-  if (filter) {
+  const materialRows=
+    Object.entries(recipe.materials)
+    .map(([name,amount])=>{
 
-    const q =
-      filter.toLowerCase();
+      const total=
+        amount*batches;
 
-    matches =
-      tutorials.filter(t=>
-        `${t.title}
-         ${t.category}
-         ${t.edition}
-         ${t.query}`
-          .toLowerCase()
-          .includes(q)
-      );
+      return`
 
-  }
+        <div class="material">
 
-  if (!matches.length) {
+          <span>
+            ${icon(name)}
+            ${name}
+          </span>
 
-    container.innerHTML =
-      `<div class="empty">
-        No tutorials found.
-      </div>`;
+          <span>
 
-    return;
-  }
+            <span class="material-amount">
+              ${total}
+            </span>
 
-  const categories = {};
+            <span class="small">
+              ${stackText(total)}
+            </span>
 
-  matches.forEach(t=>{
+          </span>
 
-    if (!categories[t.category])
-      categories[t.category] = [];
+        </div>
 
-    categories[t.category].push(t);
+      `;
 
-  });
+    })
+    .join("");
 
-  container.innerHTML =
-    Object.entries(categories)
-      .map(([category,items])=>`
 
-        <div class="tutorial-category">
+  return`
 
-          <h3 class="category-title">
-            ${category}
-          </h3>
+    <div class="result">
 
-          <div class="grid">
+      <div class="result-header">
 
-            ${items.map(tutorialCard).join("")}
+        <h3>
+          ${icon(recipe.name)}
+          ${recipe.name}
+        </h3>
+
+        <span class="badge">
+          Crafting Recipe
+        </span>
+
+      </div>
+
+      <p class="result-description">
+
+        ${quantity>1
+          ? `Materials for ${quantity} ${recipe.name}${quantity===1?"":"s"}.`
+          : "Crafting pattern and materials."
+        }
+
+      </p>
+
+      <div class="recipe-result">
+
+        <div class="recipe-layout">
+
+          <div>
+
+            <div class="crafting-table">
+
+              <div class="crafting-grid">
+                ${grid}
+              </div>
+
+            </div>
+
+            <div class="output">
+
+              → ${recipe.output} ×
+              ${recipe.name}
+
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <h3>
+              Materials
+            </h3>
+
+            <div class="materials">
+
+              ${materialRows}
+
+            </div>
+
+            <div class="actions">
+
+              <button
+                onclick='copyRecipe(${JSON.stringify(recipe)})'>
+                Copy Recipe
+              </button>
+
+              <button
+                class="secondary"
+                onclick='addRecipeToChecklist(${JSON.stringify(recipe)},${quantity})'>
+                Add Checklist
+              </button>
+
+              <button
+                class="secondary"
+                onclick='rawMaterials(${JSON.stringify(recipe)},${batches})'>
+                Raw Materials
+              </button>
+
+            </div>
 
           </div>
 
         </div>
 
-      `)
-      .join("");
-
-}
-
-
-function tutorialCard(t) {
-
-  return `
-
-    <div class="card">
-
-      <h3>${t.title}</h3>
-
-      <div class="card-meta">
-
-        <span class="tag">
-          ${t.edition}
-        </span>
-
-        <span class="tag">
-          ${t.version}
-        </span>
-
-        <span class="tag">
-          ${t.difficulty}
-        </span>
-
       </div>
-
-      <p>
-        Search YouTube for:
-        <br>
-        <strong>${t.query}</strong>
-      </p>
-
-      <button
-        onclick="openURL('${escapeAttribute(t.url)}')">
-        Find Tutorials
-      </button>
 
     </div>
 
@@ -1350,428 +1510,695 @@ function tutorialCard(t) {
 }
 
 
-/* ============================================================
-   FARMS
-============================================================ */
+/* =========================================================
+   RAW MATERIALS
+========================================================= */
 
-function renderFarms(filter="") {
+function rawMaterials(recipe,batches){
 
-  const grid =
-    document.getElementById("farmGrid");
+  const result={};
 
-  const q =
-    filter.toLowerCase();
+  expand(
+    recipe.materials,
+    batches,
+    result
+  );
 
-  const matches =
-    farms.filter(f=>
-      `${f.name}
-       ${f.category}
-       ${f.edition}
-       ${f.description}`
-        .toLowerCase()
-        .includes(q)
-    );
+  let text=
+    `Raw materials for ${batches} batch${batches===1?"":"es"} of ${recipe.name}:\n\n`;
 
-  if (!matches.length) {
+  Object.entries(result)
+    .forEach(([name,amount])=>{
 
-    grid.innerHTML =
-      `<div class="empty">
-        No farms or builds found.
-      </div>`;
+      text+=
+        `${name}: ${amount}\n`;
+
+    });
+
+  alert(text);
+
+}
+
+
+function expand(materials,multiplier,result){
+
+  Object.entries(materials)
+    .forEach(([name,amount])=>{
+
+      const sub=
+        recipes.find(r=>
+          r.name.toLowerCase()===
+          name.toLowerCase()
+        );
+
+      if(sub){
+
+        expand(
+          sub.materials,
+          amount*multiplier,
+          result
+        );
+
+      }else{
+
+        result[name]=
+          (result[name]||0)+
+          amount*multiplier;
+
+      }
+
+    });
+
+}
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+function copyRecipe(recipe){
+
+  let text=
+`${recipe.name}
+
+Crafting Grid:
+`;
+
+  recipe.grid.forEach(row=>{
+
+    text+=
+      row
+      .map(x=>x||"Empty")
+      .join(" | ")+"\n";
+
+  });
+
+  text+=
+`\nMaterials:\n`;
+
+  Object.entries(recipe.materials)
+    .forEach(([name,amount])=>{
+
+      text+=
+        `${name}: ${amount}\n`;
+
+    });
+
+  navigator.clipboard
+    .writeText(text)
+    .then(()=>{
+      alert("Recipe copied!");
+    });
+
+}
+
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+function createChecklist(){
+
+  const name=
+    document
+      .getElementById("buildName")
+      .value
+      .trim()||
+    "My Build";
+
+  const lines=
+    document
+      .getElementById("buildMaterials")
+      .value
+      .split("\n")
+      .map(x=>x.trim())
+      .filter(Boolean);
+
+  if(!lines.length){
+
+    alert("Enter some materials first.");
 
     return;
+
   }
 
-  grid.innerHTML =
-    matches.map(f=>`
+  const items=
+    lines.map((line,i)=>{
+
+      const match=
+        line.match(/^(\d+)\s+(.+)$/);
+
+      return{
+
+        id:Date.now()+i,
+
+        name:
+          match
+          ? match[2]
+          : line,
+
+        amount:
+          match
+          ? Number(match[1])
+          : 1,
+
+        done:false
+
+      };
+
+    });
+
+
+  localStorage.setItem(
+    "craftcalcChecklist",
+    JSON.stringify({
+      name,
+      items
+    })
+  );
+
+  loadChecklist();
+
+  go("checklist");
+
+}
+
+
+function addRecipeToChecklist(recipe,quantity){
+
+  const batches=
+    Math.ceil(
+      quantity/
+      recipe.output
+    );
+
+  const items=
+    Object.entries(recipe.materials)
+    .map(([name,amount],i)=>({
+
+      id:Date.now()+i,
+
+      name,
+
+      amount:
+        amount*batches,
+
+      done:false
+
+    }));
+
+  let data=
+    JSON.parse(
+      localStorage.getItem(
+        "craftcalcChecklist"
+      )||
+      "null"
+    );
+
+  if(!data){
+
+    data={
+      name:recipe.name,
+      items:[]
+    };
+
+  }
+
+  data.items.push(...items);
+
+  localStorage.setItem(
+    "craftcalcChecklist",
+    JSON.stringify(data)
+  );
+
+  loadChecklist();
+
+  go("checklist");
+
+}
+
+
+function loadChecklist(){
+
+  const data=
+    JSON.parse(
+      localStorage.getItem(
+        "craftcalcChecklist"
+      )||
+      "null"
+    );
+
+  if(!data){
+
+    document.getElementById(
+      "checklistContent"
+    ).innerHTML=`
+
+      <div class="empty">
+        Create a build checklist to get started.
+      </div>
+
+    `;
+
+    document.getElementById(
+      "progressText"
+    ).textContent=
+      "No checklist yet";
+
+    return;
+
+  }
+
+  const done=
+    data.items
+      .filter(x=>x.done)
+      .length;
+
+  const percent=
+    data.items.length
+    ? Math.round(
+        done/data.items.length*100
+      )
+    : 0;
+
+  document.getElementById(
+    "progressBar"
+  ).style.width=
+    percent+"%";
+
+  document.getElementById(
+    "progressText"
+  ).textContent=
+    `${data.name} · ${percent}% complete · ${done}/${data.items.length}`;
+
+
+  document.getElementById(
+    "checklistContent"
+  ).innerHTML=
+
+    data.items
+    .map(item=>`
+
+      <label
+        class="check-item ${item.done?"done":""}">
+
+        <input
+          type="checkbox"
+          ${item.done?"checked":""}
+          onchange="toggleCheck(${item.id})"
+        >
+
+        <span>
+          ${icon(item.name)}
+          ${escapeHtml(item.name)}
+          × ${item.amount}
+        </span>
+
+      </label>
+
+    `)
+    .join("");
+
+}
+
+
+function toggleCheck(id){
+
+  const data=
+    JSON.parse(
+      localStorage.getItem(
+        "craftcalcChecklist"
+      )
+    );
+
+  const item=
+    data.items.find(
+      x=>x.id===id
+    );
+
+  if(item)
+    item.done=!item.done;
+
+  localStorage.setItem(
+    "craftcalcChecklist",
+    JSON.stringify(data)
+  );
+
+  loadChecklist();
+
+}
+
+
+function clearChecklist(){
+
+  localStorage.removeItem(
+    "craftcalcChecklist"
+  );
+
+  loadChecklist();
+
+}
+
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function findBuilds(){
+
+  const lines=
+    document
+      .getElementById("inventory")
+      .value
+      .split("\n")
+      .map(x=>x.trim())
+      .filter(Boolean);
+
+  const inventory={};
+
+  lines.forEach(line=>{
+
+    const match=
+      line.match(/^(\d+)\s+(.+)$/);
+
+    if(match){
+
+      inventory[
+        normalize(match[2])
+      ]=
+        Number(match[1]);
+
+    }
+
+  });
+
+  const results=[];
+
+  recipes.forEach(recipe=>{
+
+    let possible=Infinity;
+
+    Object.entries(recipe.materials)
+      .forEach(([name,amount])=>{
+
+        const available=
+          inventory[
+            normalize(name)
+          ]||0;
+
+        possible=
+          Math.min(
+            possible,
+            Math.floor(
+              available/amount
+            )
+          );
+
+      });
+
+    if(possible>0){
+
+      results.push({
+        recipe,
+        possible
+      });
+
+    }
+
+  });
+
+
+  results.sort(
+    (a,b)=>
+      b.possible-
+      a.possible
+  );
+
+
+  document.getElementById(
+    "buildResults"
+  ).innerHTML=
+
+    results.length
+
+    ?
+
+    results
+      .slice(0,10)
+      .map(x=>`
+
+        <div class="result">
+
+          <h3>
+            ${icon(x.recipe.name)}
+            ${x.recipe.name}
+          </h3>
+
+          <p class="result-description">
+
+            You have enough materials
+            for approximately
+
+            <strong>
+              ${x.possible}
+            </strong>
+
+            craft${x.possible===1?"":"s"}.
+
+          </p>
+
+        </div>
+
+      `)
+      .join("")
+
+    :
+
+    `<div class="empty">
+      No matching crafts found with those materials.
+    </div>`;
+
+}
+
+
+/* =========================================================
+   FARMS
+========================================================= */
+
+function renderFarms(){
+
+  document.getElementById(
+    "farmGrid"
+  ).innerHTML=
+
+    farms.map(f=>`
 
       <div class="card">
 
-        <h3>${f.name}</h3>
+        <h3>
+          🌱 ${f.name}
+        </h3>
 
-        <div class="card-meta">
+        <div class="tags">
 
-          <span class="tag">
-            ${f.category}
+          <span class="badge">
+            ${f.type}
           </span>
 
-          <span class="tag">
-            ${f.edition}
-          </span>
-
-          <span class="tag">
+          <span class="badge">
             ${f.difficulty}
           </span>
 
         </div>
 
         <p>
-          ${f.description}
+          Automatic ${f.type.toLowerCase()}
+          production.
         </p>
 
-        ${
-          f.materials
-          ?
-          `<button
-             onclick='showBuildMaterials(${JSON.stringify(f.materials)})'>
-             Calculate Materials
-           </button>`
-          :
-          `<button
-             onclick="openSearch('${escapeAttribute(f.tutorialSearch)}')">
-             Find Matching Tutorials
-           </button>`
-        }
+        <button
+          onclick="youtube('${escapeAttr(f.query)}')">
+          Find Tutorials
+        </button>
 
       </div>
 
-    `).join("");
+    `)
+    .join("");
 
 }
 
 
-/* ============================================================
-   BUILD MATERIALS
-============================================================ */
+/* =========================================================
+   TUTORIALS
+========================================================= */
 
-function showBuildMaterials(materials) {
-
-  const rows =
-    Object.entries(materials)
-      .map(([name,count])=>`
-
-        <div class="material-row">
-
-          <span>${name}</span>
-
-          <span class="material-count">
-            ${formatNumber(count)}
-          </span>
-
-        </div>
-
-      `)
-      .join("");
-
-  const section =
-    document.getElementById("calculatorResults");
-
-  section.innerHTML = `
-
-    <div class="results-header">
-
-      <h3>Build Materials</h3>
-
-      <button
-        class="secondary"
-        onclick="copyMaterials(${JSON.stringify(materials)})">
-        Copy List
-      </button>
-
-    </div>
-
-    <div style="margin-top:12px">
-      ${rows}
-    </div>
-
-    <div class="stack-note">
-      Stack counts are calculated using
-      Minecraft's standard 64-item stack size.
-    </div>
-
-  `;
-
-  section.style.display = "block";
+function renderTutorials(){
 
   document.getElementById(
-    "calculator"
-  ).scrollIntoView({
-    behavior:"smooth"
-  });
+    "tutorialGrid"
+  ).innerHTML=
+
+    tutorials.map(t=>`
+
+      <div class="card">
+
+        <h3>
+          🎥 ${t[0]}
+        </h3>
+
+        <p>
+          Find YouTube tutorials for this build.
+        </p>
+
+        <button
+          onclick="youtube('${escapeAttr(t[1])}')">
+          Find Tutorial
+        </button>
+
+      </div>
+
+    `)
+    .join("");
 
 }
 
 
-function copyMaterials(materials) {
+/* =========================================================
+   HELPERS
+========================================================= */
 
-  const text =
-    Object.entries(materials)
-      .map(([name,count])=>
-        `${name}: ${count}`
-      )
-      .join("\n");
+function icon(name){
 
-  navigator.clipboard
-    .writeText(text)
-    .then(()=>
-      alert("Material list copied!")
-    );
+  const n=
+    name.toLowerCase();
+
+  if(n.includes("wood")||
+     n.includes("plank")||
+     n.includes("log"))
+    return "🪵";
+
+  if(n.includes("iron"))
+    return "⚙️";
+
+  if(n.includes("redstone"))
+    return "🔴";
+
+  if(n.includes("stone")||
+     n.includes("cobble"))
+    return "🪨";
+
+  if(n.includes("glass"))
+    return "🔷";
+
+  if(n.includes("book")||
+     n.includes("paper"))
+    return "📖";
+
+  if(n.includes("wheat"))
+    return "🌾";
+
+  if(n.includes("sugar"))
+    return "🌿";
+
+  if(n.includes("coal"))
+    return "⬛";
+
+  if(n.includes("chest"))
+    return "📦";
+
+  if(n.includes("hopper"))
+    return "🔽";
+
+  if(n.includes("torch"))
+    return "🔥";
+
+  if(n.includes("bread"))
+    return "🍞";
+
+  return "🧱";
 
 }
 
 
-/* ============================================================
-   SITE-WIDE SEARCH
-============================================================ */
+function stackText(n){
 
-function setupSearch() {
+  if(n<64)
+    return `(${n})`;
 
-  const input =
-    document.getElementById("siteSearch");
+  const stacks=
+    Math.floor(n/64);
 
-  input.addEventListener(
-    "input",
-    runSiteSearch
-  );
+  const remainder=
+    n%64;
+
+  if(!remainder)
+    return `(${stacks} stack${stacks===1?"":"s"})`;
+
+  return `(${stacks} stack${stacks===1?"":"s"} + ${remainder})`;
 
 }
 
 
-function runSiteSearch() {
-
-  const query =
-    document.getElementById(
-      "siteSearch"
-    ).value.trim();
-
-  const section =
-    document.getElementById(
-      "searchSection"
-    );
-
-  if (!query) {
-
-    section.style.display = "none";
-
-    renderRecipes();
-
-    renderTutorials();
-
-    renderFarms();
-
-    return;
-
-  }
-
-  section.style.display = "block";
-
-  const q =
-    query.toLowerCase();
-
-  const results = [];
-
-
-  /* recipes */
-
-  Object.entries(recipes)
-    .forEach(([id,recipe])=>{
-
-      if (
-        recipe.name
-          .toLowerCase()
-          .includes(q)
-      ) {
-
-        results.push({
-
-          type:"Recipe",
-
-          title:recipe.name,
-
-          description:
-            "Crafting recipe and material calculator.",
-
-          action:`
-            <button
-              onclick="useRecipe('${id}')">
-              Calculate
-            </button>
-          `
-
-        });
-
-      }
-
-    });
-
-
-  /* tutorials */
-
-  tutorials
-    .filter(t=>
-      `${t.title}
-       ${t.category}
-       ${t.query}`
-      .toLowerCase()
-      .includes(q)
-    )
-    .slice(0,10)
-    .forEach(t=>{
-
-      results.push({
-
-        type:"Tutorial",
-
-        title:t.title,
-
-        description:
-          `${t.category} · ${t.edition} · ${t.difficulty}`,
-
-        action:`
-          <button
-            onclick="openURL('${escapeAttribute(t.url)}')">
-            Find Tutorials
-          </button>
-        `
-
-      });
-
-    });
-
-
-  /* farms */
-
-  farms
-    .filter(f=>
-      `${f.name}
-       ${f.category}
-       ${f.description}`
-      .toLowerCase()
-      .includes(q)
-    )
-    .forEach(f=>{
-
-      results.push({
-
-        type:"Farm / Build",
-
-        title:f.name,
-
-        description:
-          `${f.category} · ${f.edition}`,
-
-        action:`
-          <button
-            onclick="openSearch('${escapeAttribute(f.tutorialSearch)}')">
-            Find Tutorials
-          </button>
-        `
-
-      });
-
-    });
-
-
-  /* general YouTube search */
-
-  results.push({
-
-    type:"YouTube",
-
-    title:`Search YouTube for "${query}"`,
-
-    description:
-      "Find Minecraft tutorials matching your search.",
-
-    action:`
-      <button
-        onclick="openSearch('${escapeAttribute(query + " Minecraft tutorial")}')">
-        Search YouTube
-      </button>
-    `
-
-  });
-
-
-  document.getElementById(
-    "searchResults"
-  ).innerHTML =
-    results
-      .slice(0,15)
-      .map(r=>`
-
-        <div class="search-result-card">
-
-          <span class="tag">
-            ${r.type}
-          </span>
-
-          <h3>${r.title}</h3>
-
-          <p>${r.description}</p>
-
-          <div class="search-result-actions">
-            ${r.action}
-          </div>
-
-        </div>
-
-      `)
-      .join("");
-
-
-  /* Also filter the lower sections */
-
-  renderRecipes(query);
-
-  renderTutorials(query);
-
-  renderFarms(query);
+function normalize(x){
+
+  return x
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g,"");
 
 }
 
 
-/* ============================================================
-   YOUTUBE
-============================================================ */
+function escapeAttr(x){
 
-function openSearch(query) {
-
-  const url =
-    "https://www.youtube.com/results?search_query=" +
-    encodeURIComponent(query);
-
-  openURL(url);
+  return String(x)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
 
 }
 
 
-function openURL(url) {
+function escapeHtml(x){
+
+  return String(x)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function youtube(query){
 
   window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
+    "https://www.youtube.com/results?search_query="+
+    encodeURIComponent(query),
+    "_blank"
   );
 
 }
 
 
-/* ============================================================
-   HELPERS
-============================================================ */
+function go(id){
 
-function formatNumber(number) {
-
-  return Number(number)
-    .toLocaleString();
-
-}
-
-
-function escapeAttribute(text) {
-
-  return String(text)
-    .replace(/'/g,"&#39;");
+  document
+    .getElementById(id)
+    .scrollIntoView({
+      behavior:"smooth"
+    });
 
 }
 
 
-/* ============================================================
+/* =========================================================
    START
-============================================================ */
+========================================================= */
 
-init();
+renderFarms();
+renderTutorials();
+loadChecklist();
 
 </script>
 
