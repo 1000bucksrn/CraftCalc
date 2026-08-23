@@ -4,38 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CraftCalc - Minecraft Crafting & Resource Calculator</title>
+<title>CraftCalc — Minecraft Crafting Calculator</title>
 
-<meta
-  name="description"
-  content="Free Minecraft crafting and resource calculator. Calculate materials, stacks, recipes, and resources for Minecraft Java and Bedrock."
->
+<meta name="description"
+content="CraftCalc is a free fan-made Minecraft crafting calculator, recipe finder and tutorial finder.">
 
 <style>
-:root {
-  --bg: #f4f6f8;
-  --card: #ffffff;
-  --text: #17202a;
-  --muted: #64748b;
-  --border: #dbe2ea;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --success: #15803d;
-  --success-bg: #f0fdf4;
-  --header: #17202a;
-}
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-body.dark {
-  --bg: #111827;
-  --card: #1f2937;
-  --text: #f8fafc;
-  --muted: #aab5c4;
-  --border: #374151;
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --success: #4ade80;
-  --success-bg: #14251a;
-  --header: #0b1220;
+:root {
+  --bg: #101713;
+  --panel: #18221b;
+  --panel2: #202c22;
+  --border: #344437;
+  --text: #f2f5ef;
+  --muted: #9daa9d;
+  --green: #65c466;
+  --green-dark: #3d8f45;
+  --gold: #e6b84c;
+  --danger: #d95c5c;
+  --shadow: rgba(0,0,0,.35);
 }
 
 * {
@@ -48,329 +36,280 @@ html {
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top, #203225 0, var(--bg) 45%);
   color: var(--text);
-  transition: background 0.2s, color 0.2s;
+  font-family: Arial, sans-serif;
 }
 
 header {
-  background: var(--header);
-  color: white;
-  padding: 35px 20px;
+  border-bottom: 3px solid #2d3d30;
+  background: #101713;
 }
 
-.header-inner {
-  max-width: 1050px;
+.header {
+  max-width: 1100px;
   margin: auto;
-}
-
-.header-top {
+  padding: 28px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 40px;
+.logo {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(20px, 4vw, 34px);
+  color: #f4f6ed;
+  text-shadow:
+    3px 3px 0 #26352a,
+    5px 5px 0 #0a0e0b;
+  letter-spacing: 1px;
 }
 
-header p {
-  margin: 8px 0 0;
-  color: #cbd5e1;
+.logo span {
+  color: var(--green);
 }
 
-.theme-button {
-  width: auto;
-  border: 1px solid #475569;
-  background: transparent;
-  color: white;
-  padding: 9px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-nav {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-inner {
-  max-width: 1050px;
-  margin: auto;
-  display: flex;
-  gap: 5px;
-  overflow-x: auto;
-}
-
-.nav-inner a {
-  color: var(--text);
-  text-decoration: none;
-  padding: 14px 15px;
-  white-space: nowrap;
+.tagline {
+  margin-top: 10px;
+  color: var(--muted);
   font-size: 14px;
 }
 
-.nav-inner a:hover {
-  color: var(--primary);
+.header-link {
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--panel);
 }
 
 main {
-  max-width: 1050px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  max-width: 1100px;
+  margin: auto;
+  padding: 35px 20px 70px;
 }
 
 .hero {
   text-align: center;
-  padding: 40px 25px;
+  padding: 40px 15px 35px;
 }
 
-.hero h2 {
-  font-size: 30px;
-  margin: 0 0 10px;
+.hero h1 {
+  margin: 0 0 15px;
+  font-size: clamp(28px, 6vw, 48px);
 }
 
 .hero p {
-  color: var(--muted);
-  max-width: 700px;
+  max-width: 680px;
   margin: auto;
+  color: var(--muted);
   line-height: 1.7;
 }
 
-h2 {
+.search {
+  max-width: 800px;
+  margin: 30px auto 0;
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  padding: 20px 22px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 18px;
+  outline: none;
+}
+
+.search input:focus {
+  border-color: var(--green);
+}
+
+.panel {
+  background: linear-gradient(145deg, var(--panel), #141d17);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 25px;
+  margin-top: 25px;
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.panel h2 {
   margin-top: 0;
 }
 
-h3 {
-  margin-top: 0;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 180px 160px;
+  gap: 12px;
 }
 
 select,
-input {
+input[type="number"] {
   width: 100%;
   padding: 13px;
-  font-size: 16px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--card);
+  background: var(--panel2);
   color: var(--text);
-  margin-bottom: 17px;
+  font-size: 16px;
 }
 
 button {
-  width: 100%;
-  padding: 13px;
-  font-size: 16px;
-  border: none;
+  border: 0;
   border-radius: 8px;
-  background: var(--primary);
+  padding: 13px 16px;
+  background: var(--green-dark);
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  background: var(--primary-dark);
-}
-
-.secondary-button {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  margin-top: 10px;
-}
-
-.secondary-button:hover {
-  background: var(--bg);
-}
-
-.search-box {
-  margin-bottom: 15px;
-}
-
-.category-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.category-buttons button {
-  width: auto;
-  padding: 8px 12px;
-  font-size: 14px;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.category-buttons button.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-.recipe-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 12px;
-}
-
-.recipe-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 15px;
-  cursor: pointer;
-  background: var(--card);
-}
-
-.recipe-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.recipe-card strong {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.recipe-card span {
-  color: var(--muted);
-  font-size: 13px;
+  background: var(--green);
+  color: #071009;
 }
 
 .results {
   display: none;
-  margin-top: 25px;
-  padding: 20px;
-  background: var(--success-bg);
-  border: 1px solid var(--border);
+  margin-top: 22px;
+  padding: 18px;
   border-radius: 10px;
+  background: #101a12;
+  border: 1px solid var(--border);
 }
 
-.result-total {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.resource {
+.result-row {
   display: flex;
   justify-content: space-between;
-  gap: 15px;
   padding: 11px 0;
   border-bottom: 1px solid var(--border);
 }
 
-.resource:last-child {
-  border-bottom: none;
+.result-row:last-child {
+  border-bottom: 0;
 }
 
-.resource-name {
+.amount {
+  color: var(--gold);
   font-weight: bold;
 }
 
-.resource-amount {
-  font-weight: bold;
+.editions {
+  display: flex;
+  gap: 8px;
+  margin: 15px 0;
 }
 
-.stats {
+.editions button {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.editions button.active {
+  background: var(--green-dark);
+  color: white;
+  border-color: var(--green);
+}
+
+.section-title {
+  margin-top: 45px;
+}
+
+.recipe-grid,
+.tutorial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 }
 
-.stat {
-  text-align: center;
+.card {
+  background: var(--panel);
   border: 1px solid var(--border);
-  padding: 20px;
-  border-radius: 10px;
+  border-radius: 11px;
+  padding: 18px;
 }
 
-.stat-number {
-  display: block;
-  font-size: 30px;
+.card:hover {
+  border-color: var(--green-dark);
+}
+
+.card h3 {
+  margin: 0 0 8px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.card button {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.tutorial-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.tutorial-type {
+  color: var(--gold);
+  font-size: 12px;
   font-weight: bold;
-  color: var(--primary);
+  text-transform: uppercase;
 }
 
-.stat-label {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.info {
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.faq {
-  border-top: 1px solid var(--border);
-  padding: 15px 0;
-}
-
-.faq:first-of-type {
-  border-top: none;
+.disclaimer {
+  margin-top: 45px;
+  padding: 15px;
+  border: 1px solid #554b2b;
+  background: #211f14;
+  color: #c9c2a2;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 footer {
-  max-width: 1050px;
-  margin: 0 auto;
-  padding: 20px;
-  color: var(--muted);
-  font-size: 13px;
   text-align: center;
-}
-
-.notice {
-  padding: 12px 15px;
-  border-radius: 8px;
-  background: var(--bg);
+  padding: 25px;
+  border-top: 1px solid var(--border);
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
-  margin-top: 15px;
+  font-size: 12px;
 }
 
-@media (max-width: 700px) {
-  header h1 {
-    font-size: 30px;
-  }
-
-  .header-top {
-    align-items: flex-start;
-  }
-
-  .stats {
+@media (max-width: 800px) {
+  .controls {
     grid-template-columns: 1fr;
   }
 
-  .recipe-grid {
+  .recipe-grid,
+  .tutorial-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-@media (max-width: 450px) {
-  .recipe-grid {
+@media (max-width: 500px) {
+  .recipe-grid,
+  .tutorial-grid {
     grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 18px;
   }
 }
 </style>
@@ -379,539 +318,154 @@ footer {
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="header-top">
-      <div>
-        <h1>CraftCalc</h1>
-        <p>Free Minecraft crafting & resource tools</p>
-      </div>
-
-      <button class="theme-button" onclick="toggleTheme()">
-        🌙 Dark Mode
-      </button>
+  <div class="header">
+    <div>
+      <div class="logo">CRAFT<span>CALC</span></div>
+      <div class="tagline">Craft smarter. Build faster.</div>
     </div>
+
+    <a class="header-link" href="#tutorials">Tutorials</a>
   </div>
 </header>
 
-<nav>
-  <div class="nav-inner">
-    <a href="#calculator">Calculator</a>
-    <a href="#recipes">Recipes</a>
-    <a href="#tools">Tools</a>
-    <a href="#about">About</a>
-    <a href="#faq">FAQ</a>
-  </div>
-</nav>
-
 <main>
 
-<section class="card hero">
-  <h2>Minecraft Resource Calculator</h2>
+<section class="hero">
+
+  <h1>Minecraft Crafting Calculator</h1>
 
   <p>
-    Calculate the materials you need to craft items in Minecraft.
-    Search recipes, calculate quantities, and break complex recipes
-    down into their basic materials.
-  </p>
-</section>
-
-<section class="card" id="calculator">
-
-  <h2>🧮 Resource Calculator</h2>
-
-  <label for="item">Choose an item</label>
-
-  <select id="item"></select>
-
-  <label for="quantity">How many do you need?</label>
-
-  <input
-    id="quantity"
-    type="number"
-    min="1"
-    max="1000000"
-    value="1"
-  >
-
-  <button onclick="calculateResources()">
-    Calculate Resources
-  </button>
-
-  <div id="results" class="results">
-
-    <div id="resultTitle" class="result-total"></div>
-
-    <div id="resourceList"></div>
-
-    <button class="secondary-button" onclick="copyResults()">
-      📋 Copy Results
-    </button>
-
-    <button class="secondary-button" onclick="shareCalculator()">
-      🔗 Share This Calculation
-    </button>
-
-  </div>
-
-</section>
-
-<section class="card" id="recipes">
-
-  <h2>📚 Recipe Finder</h2>
-
-  <input
-    id="recipeSearch"
-    class="search-box"
-    type="text"
-    placeholder="Search recipes..."
-    oninput="renderRecipes()"
-  >
-
-  <div class="category-buttons">
-
-    <button class="active" onclick="setCategory('all', this)">
-      All
-    </button>
-
-    <button onclick="setCategory('building', this)">
-      Building
-    </button>
-
-    <button onclick="setCategory('tools', this)">
-      Tools
-    </button>
-
-    <button onclick="setCategory('redstone', this)">
-      Redstone
-    </button>
-
-    <button onclick="setCategory('utility', this)">
-      Utility
-    </button>
-
-    <button onclick="setCategory('combat', this)">
-      Combat
-    </button>
-
-    <button onclick="setCategory('transport', this)">
-      Transport
-    </button>
-
-    <button onclick="setCategory('food', this)">
-      Food
-    </button>
-
-  </div>
-
-  <div id="recipeGrid" class="recipe-grid"></div>
-
-</section>
-
-<section class="card" id="tools">
-
-  <h2>🛠️ More Tools</h2>
-
-  <div class="stats">
-
-    <div class="stat">
-      <span class="stat-number" id="recipeCount">0</span>
-      <span class="stat-label">Recipes</span>
-    </div>
-
-    <div class="stat">
-      <span class="stat-number">64</span>
-      <span class="stat-label">Items per normal stack</span>
-    </div>
-
-    <div class="stat">
-      <span class="stat-number">100%</span>
-      <span class="stat-label">Free</span>
-    </div>
-
-  </div>
-
-  <br>
-
-  <h3>📦 Stack Calculator</h3>
-
-  <label for="stackAmount">Enter an amount</label>
-
-  <input
-    id="stackAmount"
-    type="number"
-    min="1"
-    value="128"
-  >
-
-  <button onclick="calculateStacks()">
-    Calculate Stacks
-  </button>
-
-  <div id="stackResult" class="notice">
-    Enter an amount to calculate stacks.
-  </div>
-
-</section>
-
-<section class="card" id="about">
-
-  <h2>About CraftCalc</h2>
-
-  <p class="info">
-    CraftCalc is a free, independent fan-made Minecraft utility.
-    It helps players calculate crafting materials and explore recipes.
+    Find recipes, calculate materials and discover useful
+    tutorials without digging through dozens of pages.
   </p>
 
-  <p class="info">
-    The calculator runs directly in your browser. No account,
-    subscription, or external API is required.
-  </p>
-
-  <div class="notice">
-    CraftCalc is not affiliated with, endorsed by, or sponsored by
-    Mojang Studios or Microsoft. Minecraft is a trademark of Microsoft.
+  <div class="search">
+    <input
+      id="mainSearch"
+      type="text"
+      placeholder="Search an item, recipe, farm or tutorial..."
+      oninput="searchSite()"
+    >
   </div>
 
 </section>
 
-<section class="card" id="faq">
 
-  <h2>❓ Frequently Asked Questions</h2>
+<section class="panel">
 
-  <div class="faq">
-    <h3>Is CraftCalc free?</h3>
-    <p class="info">
-      Yes. The calculator is designed to be completely free to use.
-    </p>
+  <h2>🧱 Resource Calculator</h2>
+
+  <div class="editions">
+
+    <button
+      id="javaButton"
+      class="active"
+      onclick="setEdition('Java', this)"
+    >
+      Java
+    </button>
+
+    <button
+      id="bedrockButton"
+      onclick="setEdition('Bedrock', this)"
+    >
+      Bedrock
+    </button>
+
   </div>
 
-  <div class="faq">
-    <h3>Does it work on mobile?</h3>
-    <p class="info">
-      Yes. The website is designed to work on phones, tablets, and computers.
-    </p>
+  <div class="controls">
+
+    <select id="item"></select>
+
+    <input
+      id="quantity"
+      type="number"
+      min="1"
+      value="1"
+    >
+
+    <button onclick="calculate()">
+      Calculate
+    </button>
+
   </div>
 
-  <div class="faq">
-    <h3>Does it require an account?</h3>
-    <p class="info">
-      No account is required.
+  <div id="results" class="results"></div>
+
+</section>
+
+
+<h2 class="section-title">🔎 Popular Recipes</h2>
+
+<section id="recipes" class="recipe-grid"></section>
+
+
+<h2 class="section-title" id="tutorials">
+  🎥 Helpful Tutorials
+</h2>
+
+<section id="tutorialGrid" class="tutorial-grid">
+
+  <div class="card tutorial-card">
+    <span class="tutorial-type">Bone Meal</span>
+    <h3>Bone Meal Farm</h3>
+    <p>
+      A Java & Bedrock bone-meal farm tutorial.
     </p>
+
+    <button onclick="openTutorial(
+      'https://www.youtube.com/watch?v=6tI5KhNCeTs'
+    )">
+      Watch Tutorial
+    </button>
   </div>
 
-  <div class="faq">
-    <h3>Does it work for Java and Bedrock?</h3>
-    <p class="info">
-      The calculator focuses on recipes shared between the editions.
-      Edition-specific recipes can be added later.
+  <div class="card tutorial-card">
+    <span class="tutorial-type">Bone Meal</span>
+    <h3>Automatic Bone Meal Farm</h3>
+    <p>
+      A Minecraft 1.21 Java & Bedrock farm tutorial.
     </p>
+
+    <button onclick="openTutorial(
+      'https://www.youtube.com/watch?v=dNCtnAXyWKo'
+    )">
+      Watch Tutorial
+    </button>
   </div>
 
 </section>
+
+
+<div class="disclaimer">
+  CraftCalc is an independent fan-made project and is not
+  affiliated with, endorsed by, or sponsored by Mojang Studios
+  or Microsoft. Minecraft is a trademark of Microsoft.
+</div>
 
 </main>
 
+
 <footer>
-  © 2026 CraftCalc · Independent fan-made Minecraft utility
+  CraftCalc © 2026 · Independent fan-made utility
 </footer>
+
 
 <script>
 
-/* =========================================================
-   RECIPE DATABASE
-   ========================================================= */
-
 const recipes = {
-
-  /* BUILDING */
-
-  crafting_table: {
-    name: "Crafting Table",
-    category: "building",
-    output: 1,
-    materials: {
-      "Wood Planks": 4
-    }
-  },
-
-  chest: {
-    name: "Chest",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Wood Planks": 8
-    }
-  },
-
-  barrel: {
-    name: "Barrel",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Wood Planks": 6,
-      "Stick": 2
-    }
-  },
 
   bookshelf: {
     name: "Bookshelf",
-    category: "building",
-    output: 1,
     materials: {
       "Wood Planks": 6,
       "Book": 3
     }
   },
 
-  ladder: {
-    name: "Ladder",
-    category: "building",
-    output: 3,
-    materials: {
-      "Stick": 7
-    }
-  },
-
-  torch: {
-    name: "Torch",
-    category: "building",
-    output: 4,
-    materials: {
-      "Coal/Charcoal": 1,
-      "Stick": 1
-    }
-  },
-
-  lantern: {
-    name: "Lantern",
-    category: "building",
-    output: 1,
-    materials: {
-      "Iron Nugget": 8,
-      "Torch": 1
-    }
-  },
-
-  soul_lantern: {
-    name: "Soul Lantern",
-    category: "building",
-    output: 1,
-    materials: {
-      "Iron Nugget": 8,
-      "Soul Torch": 1
-    }
-  },
-
-  glass_pane: {
-    name: "Glass Pane",
-    category: "building",
-    output: 16,
-    materials: {
-      "Glass": 6
-    }
-  },
-
-  stone_bricks: {
-    name: "Stone Bricks",
-    category: "building",
-    output: 4,
-    materials: {
-      "Stone": 4
-    }
-  },
-
-  quartz_block: {
-    name: "Block of Quartz",
-    category: "building",
-    output: 1,
-    materials: {
-      "Quartz": 4
-    }
-  },
-
-  bricks: {
-    name: "Bricks",
-    category: "building",
-    output: 1,
-    materials: {
-      "Brick": 4
-    }
-  },
-
-  sandstone: {
-    name: "Sandstone",
-    category: "building",
-    output: 1,
-    materials: {
-      "Sand": 4
-    }
-  },
-
-  tnt: {
-    name: "TNT",
-    category: "building",
-    output: 1,
-    materials: {
-      "Gunpowder": 5,
-      "Sand": 4
-    }
-  },
-
-  /* TOOLS */
-
-  stick: {
-    name: "Stick",
-    category: "tools",
-    output: 4,
-    materials: {
-      "Wood Planks": 2
-    }
-  },
-
-  wooden_pickaxe: {
-    name: "Wooden Pickaxe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Wood Planks": 3,
-      "Stick": 2
-    }
-  },
-
-  stone_pickaxe: {
-    name: "Stone Pickaxe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Stone/Cobblestone": 3,
-      "Stick": 2
-    }
-  },
-
-  iron_pickaxe: {
-    name: "Iron Pickaxe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 3,
-      "Stick": 2
-    }
-  },
-
-  diamond_pickaxe: {
-    name: "Diamond Pickaxe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Diamond": 3,
-      "Stick": 2
-    }
-  },
-
-  iron_axe: {
-    name: "Iron Axe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 3,
-      "Stick": 2
-    }
-  },
-
-  diamond_axe: {
-    name: "Diamond Axe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Diamond": 3,
-      "Stick": 2
-    }
-  },
-
-  iron_shovel: {
-    name: "Iron Shovel",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 1,
-      "Stick": 2
-    }
-  },
-
-  diamond_shovel: {
-    name: "Diamond Shovel",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Diamond": 1,
-      "Stick": 2
-    }
-  },
-
-  iron_hoe: {
-    name: "Iron Hoe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 2,
-      "Stick": 2
-    }
-  },
-
-  diamond_hoe: {
-    name: "Diamond Hoe",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Diamond": 2,
-      "Stick": 2
-    }
-  },
-
-  fishing_rod: {
-    name: "Fishing Rod",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Stick": 3,
-      "String": 2
-    }
-  },
-
-  shears: {
-    name: "Shears",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 2
-    }
-  },
-
-  flint_and_steel: {
-    name: "Flint and Steel",
-    category: "tools",
-    output: 1,
-    materials: {
-      "Iron Ingot": 1,
-      "Flint": 1
-    }
-  },
-
-  bucket: {
-    name: "Bucket",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Ingot": 3
-    }
-  },
-
-  /* REDSTONE */
-
   piston: {
     name: "Piston",
-    category: "redstone",
-    output: 1,
     materials: {
       "Wood Planks": 3,
       "Cobblestone": 4,
@@ -920,229 +474,45 @@ const recipes = {
     }
   },
 
-  sticky_piston: {
-    name: "Sticky Piston",
-    category: "redstone",
-    output: 1,
+  chest: {
+    name: "Chest",
     materials: {
-      "Piston": 1,
-      "Slimeball": 1
+      "Wood Planks": 8
     }
   },
 
-  dispenser: {
-    name: "Dispenser",
-    category: "redstone",
-    output: 1,
+  furnace: {
+    name: "Furnace",
     materials: {
-      "Cobblestone": 7,
-      "Bow": 1,
-      "Redstone Dust": 1
+      "Cobblestone": 8
     }
   },
 
-  dropper: {
-    name: "Dropper",
-    category: "redstone",
-    output: 1,
+  crafting_table: {
+    name: "Crafting Table",
     materials: {
-      "Cobblestone": 7,
-      "Redstone Dust": 1
+      "Wood Planks": 4
     }
   },
 
-  observer: {
-    name: "Observer",
-    category: "redstone",
-    output: 1,
+  torch: {
+    name: "Torch",
     materials: {
-      "Cobblestone": 6,
-      "Redstone Dust": 2,
-      "Quartz": 1
-    }
-  },
-
-  repeater: {
-    name: "Redstone Repeater",
-    category: "redstone",
-    output: 1,
-    materials: {
-      "Stone": 3,
-      "Redstone Torch": 2,
-      "Redstone Dust": 1
-    }
-  },
-
-  redstone_torch: {
-    name: "Redstone Torch",
-    category: "redstone",
-    output: 1,
-    materials: {
-      "Stick": 1,
-      "Redstone Dust": 1
-    }
-  },
-
-  lever: {
-    name: "Lever",
-    category: "redstone",
-    output: 1,
-    materials: {
-      "Stick": 1,
-      "Cobblestone": 1
-    }
-  },
-
-  stone_button: {
-    name: "Stone Button",
-    category: "redstone",
-    output: 1,
-    materials: {
-      "Stone": 1
+      "Coal": 1,
+      "Stick": 1
     }
   },
 
   hopper: {
     name: "Hopper",
-    category: "redstone",
-    output: 1,
     materials: {
       "Iron Ingot": 5,
       "Chest": 1
     }
   },
 
-  /* UTILITY */
-
-  furnace: {
-    name: "Furnace",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Cobblestone": 8
-    }
-  },
-
-  blast_furnace: {
-    name: "Blast Furnace",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Ingot": 5,
-      "Furnace": 1,
-      "Smooth Stone": 3
-    }
-  },
-
-  smoker: {
-    name: "Smoker",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Furnace": 1,
-      "Logs/Stripped Logs": 4
-    }
-  },
-
-  anvil: {
-    name: "Anvil",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Block": 3,
-      "Iron Ingot": 4
-    }
-  },
-
-  enchanting_table: {
-    name: "Enchanting Table",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Obsidian": 4,
-      "Diamond": 2,
-      "Book": 1
-    }
-  },
-
-  ender_chest: {
-    name: "Ender Chest",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Obsidian": 8,
-      "Eye of Ender": 1
-    }
-  },
-
-  beacon: {
-    name: "Beacon",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Glass": 5,
-      "Nether Star": 1,
-      "Obsidian": 3
-    }
-  },
-
-  smithing_table: {
-    name: "Smithing Table",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Ingot": 2,
-      "Wood Planks": 4
-    }
-  },
-
-  stonecutter: {
-    name: "Stonecutter",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Ingot": 1,
-      "Stone": 3
-    }
-  },
-
-  cartography_table: {
-    name: "Cartography Table",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Paper": 2,
-      "Wood Planks": 4
-    }
-  },
-
-  grindstone: {
-    name: "Grindstone",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Stone Slab": 1,
-      "Stick": 2,
-      "Wood Planks": 2
-    }
-  },
-
-  loom: {
-    name: "Loom",
-    category: "utility",
-    output: 1,
-    materials: {
-      "String": 2,
-      "Wood Planks": 2
-    }
-  },
-
-  /* COMBAT */
-
   shield: {
     name: "Shield",
-    category: "combat",
-    output: 1,
     materials: {
       "Wood Planks": 6,
       "Iron Ingot": 1
@@ -1151,30 +521,14 @@ const recipes = {
 
   bow: {
     name: "Bow",
-    category: "combat",
-    output: 1,
     materials: {
       "Stick": 3,
       "String": 3
     }
   },
 
-  crossbow: {
-    name: "Crossbow",
-    category: "combat",
-    output: 1,
-    materials: {
-      "Stick": 3,
-      "String": 2,
-      "Iron Ingot": 1,
-      "Tripwire Hook": 1
-    }
-  },
-
   arrow: {
     name: "Arrow",
-    category: "combat",
-    output: 4,
     materials: {
       "Flint": 1,
       "Stick": 1,
@@ -1182,183 +536,29 @@ const recipes = {
     }
   },
 
-  iron_sword: {
-    name: "Iron Sword",
-    category: "combat",
-    output: 1,
+  bucket: {
+    name: "Bucket",
     materials: {
-      "Iron Ingot": 2,
-      "Stick": 1
+      "Iron Ingot": 3
     }
   },
 
-  diamond_sword: {
-    name: "Diamond Sword",
-    category: "combat",
-    output: 1,
+  ladder: {
+    name: "Ladder",
     materials: {
-      "Diamond": 2,
-      "Stick": 1
+      "Stick": 7
     }
   },
-
-  iron_helmet: {
-    name: "Iron Helmet",
-    category: "combat",
-    output: 1,
-    materials: {
-      "Iron Ingot": 5
-    }
-  },
-
-  iron_chestplate: {
-    name: "Iron Chestplate",
-    category: "combat",
-    output: 1,
-    materials: {
-      "Iron Ingot": 8
-    }
-  },
-
-  iron_leggings: {
-    name: "Iron Leggings",
-    category: "combat",
-    output: 1,
-    materials: {
-      "Iron Ingot": 7
-    }
-  },
-
-  iron_boots: {
-    name: "Iron Boots",
-    category: "combat",
-    output: 1,
-    materials: {
-      "Iron Ingot": 4
-    }
-  },
-
-  /* TRANSPORT */
-
-  rail: {
-    name: "Rail",
-    category: "transport",
-    output: 16,
-    materials: {
-      "Iron Ingot": 6,
-      "Stick": 1
-    }
-  },
-
-  powered_rail: {
-    name: "Powered Rail",
-    category: "transport",
-    output: 6,
-    materials: {
-      "Gold Ingot": 6,
-      "Stick": 1,
-      "Redstone Dust": 1
-    }
-  },
-
-  minecart: {
-    name: "Minecart",
-    category: "transport",
-    output: 1,
-    materials: {
-      "Iron Ingot": 5
-    }
-  },
-
-  boat: {
-    name: "Boat",
-    category: "transport",
-    output: 1,
-    materials: {
-      "Wood Planks": 5
-    }
-  },
-
-  chest_minecart: {
-    name: "Chest Minecart",
-    category: "transport",
-    output: 1,
-    materials: {
-      "Minecart": 1,
-      "Chest": 1
-    }
-  },
-
-  hopper_minecart: {
-    name: "Hopper Minecart",
-    category: "transport",
-    output: 1,
-    materials: {
-      "Minecart": 1,
-      "Hopper": 1
-    }
-  },
-
-  /* FOOD */
 
   bread: {
     name: "Bread",
-    category: "food",
-    output: 1,
     materials: {
       "Wheat": 3
     }
   },
-
-  cake: {
-    name: "Cake",
-    category: "food",
-    output: 1,
-    materials: {
-      "Milk Bucket": 3,
-      "Sugar": 2,
-      "Egg": 1,
-      "Wheat": 3
-    }
-  },
-
-  cookie: {
-    name: "Cookie",
-    category: "food",
-    output: 8,
-    materials: {
-      "Wheat": 2,
-      "Cocoa Beans": 1
-    }
-  },
-
-  pumpkin_pie: {
-    name: "Pumpkin Pie",
-    category: "food",
-    output: 1,
-    materials: {
-      "Pumpkin": 1,
-      "Sugar": 1,
-      "Egg": 1
-    }
-  },
-
-  golden_apple: {
-    name: "Golden Apple",
-    category: "food",
-    output: 1,
-    materials: {
-      "Gold Ingot": 8,
-      "Apple": 1
-    }
-  },
-
-  /* MATERIALS */
 
   paper: {
     name: "Paper",
-    category: "utility",
-    output: 3,
     materials: {
       "Sugar Cane": 3
     }
@@ -1366,565 +566,200 @@ const recipes = {
 
   book: {
     name: "Book",
-    category: "utility",
-    output: 1,
     materials: {
       "Paper": 3,
       "Leather": 1
     }
   },
 
-  iron_block: {
-    name: "Block of Iron",
-    category: "building",
-    output: 1,
+  piston: {
+    name: "Piston",
     materials: {
-      "Iron Ingot": 9
-    }
-  },
-
-  gold_block: {
-    name: "Block of Gold",
-    category: "building",
-    output: 1,
-    materials: {
-      "Gold Ingot": 9
-    }
-  },
-
-  diamond_block: {
-    name: "Block of Diamond",
-    category: "building",
-    output: 1,
-    materials: {
-      "Diamond": 9
-    }
-  },
-
-  redstone_block: {
-    name: "Block of Redstone",
-    category: "redstone",
-    output: 1,
-    materials: {
-      "Redstone Dust": 9
-    }
-  },
-
-  coal_block: {
-    name: "Block of Coal",
-    category: "building",
-    output: 1,
-    materials: {
-      "Coal": 9
-    }
-  },
-
-  /* SPECIAL */
-
-  firework_rocket: {
-    name: "Firework Rocket",
-    category: "utility",
-    output: 3,
-    materials: {
-      "Paper": 1,
-      "Gunpowder": 1
-    }
-  },
-
-  map: {
-    name: "Map",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Paper": 8,
-      "Compass": 1
-    }
-  },
-
-  compass: {
-    name: "Compass",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Iron Ingot": 4,
+      "Wood Planks": 3,
+      "Cobblestone": 4,
+      "Iron Ingot": 1,
       "Redstone Dust": 1
-    }
-  },
-
-  clock: {
-    name: "Clock",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Gold Ingot": 4,
-      "Redstone Dust": 1
-    }
-  },
-
-  name_tag: {
-    name: "Name Tag",
-    category: "utility",
-    output: 1,
-    materials: {
-      "Paper": 1,
-      "Metal Nugget": 1
     }
   }
 
 };
 
+let edition = "Java";
 
-/* =========================================================
-   APP STATE
-   ========================================================= */
-
-let currentCategory = "all";
-let lastResults = [];
-
-
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
 
 function init() {
 
-  populateSelect();
+  populateItems();
 
   renderRecipes();
 
-  document.getElementById("recipeCount").textContent =
-    Object.keys(recipes).length;
+}
+
+
+function populateItems() {
+
+  const select =
+    document.getElementById("item");
+
+  select.innerHTML =
+    Object.entries(recipes)
+      .sort((a,b) =>
+        a[1].name.localeCompare(b[1].name)
+      )
+      .map(([key, recipe]) =>
+        `<option value="${key}">
+          ${recipe.name}
+        </option>`
+      )
+      .join("");
 
 }
 
 
-/* =========================================================
-   SELECT MENU
-   ========================================================= */
+function calculate() {
 
-function populateSelect() {
-
-  const select = document.getElementById("item");
-
-  const sorted = Object.entries(recipes)
-    .sort((a, b) => a[1].name.localeCompare(b[1].name));
-
-  select.innerHTML = sorted.map(([key, recipe]) => {
-
-    return `
-      <option value="${key}">
-        ${recipe.name}
-      </option>
-    `;
-
-  }).join("");
-
-}
-
-
-/* =========================================================
-   CALCULATOR
-   ========================================================= */
-
-function calculateResources() {
-
-  const item = document.getElementById("item").value;
+  const key =
+    document.getElementById("item").value;
 
   const quantity =
-    Number(document.getElementById("quantity").value);
-
-  if (!Number.isFinite(quantity) || quantity < 1) {
-
-    alert("Please enter a quantity greater than 0.");
-
-    return;
-  }
-
-  if (quantity > 1000000) {
-
-    alert("Please use a quantity of 1,000,000 or less.");
-
-    return;
-  }
-
-  const totals = {};
-
-  breakDownRecipe(item, quantity, totals, {});
-
-  lastResults = Object.entries(totals)
-    .sort((a, b) => b[1] - a[1]);
-
-  const recipe = recipes[item];
-
-  document.getElementById("resultTitle").textContent =
-    `${formatNumber(quantity)} × ${recipe.name}`;
-
-  const list = document.getElementById("resourceList");
-
-  list.innerHTML = lastResults.map(([name, amount]) => {
-
-    return `
-      <div class="resource">
-        <span class="resource-name">${escapeHtml(name)}</span>
-        <span class="resource-amount">${formatNumber(amount)}</span>
-      </div>
-    `;
-
-  }).join("");
-
-  document.getElementById("results").style.display = "block";
-
-}
-
-
-/* =========================================================
-   RECURSIVE BREAKDOWN
-   ========================================================= */
-
-function breakDownRecipe(itemKey, quantity, totals, stack) {
-
-  const recipe = recipes[itemKey];
-
-  if (!recipe) {
-
-    return;
-  }
-
-  if (stack[itemKey]) {
-
-    return;
-  }
-
-  stack[itemKey] = true;
-
-  const batches =
-    Math.ceil(quantity / recipe.output);
-
-  for (const [material, amount] of Object.entries(recipe.materials)) {
-
-    const needed = amount * batches;
-
-    const subRecipeKey =
-      findRecipeByMaterial(material);
-
-    if (subRecipeKey) {
-
-      breakDownRecipe(
-        subRecipeKey,
-        needed,
-        totals,
-        stack
-      );
-
-    } else {
-
-      totals[material] =
-        (totals[material] || 0) + needed;
-
-    }
-
-  }
-
-  delete stack[itemKey];
-
-}
-
-
-/* =========================================================
-   FIND RECIPE FOR MATERIAL
-   ========================================================= */
-
-function findRecipeByMaterial(material) {
-
-  const entry =
-    Object.entries(recipes).find(
-      ([key, recipe]) =>
-        recipe.name.toLowerCase() === material.toLowerCase()
+    Number(
+      document.getElementById("quantity").value
     );
 
-  return entry ? entry[0] : null;
+  if (!quantity || quantity < 1) {
 
-}
-
-
-/* =========================================================
-   RECIPE SEARCH
-   ========================================================= */
-
-function renderRecipes() {
-
-  const search =
-    document.getElementById("recipeSearch")
-      .value
-      .toLowerCase()
-      .trim();
-
-  const grid =
-    document.getElementById("recipeGrid");
-
-  const matches =
-    Object.entries(recipes)
-      .filter(([key, recipe]) => {
-
-        const categoryMatch =
-          currentCategory === "all" ||
-          recipe.category === currentCategory;
-
-        const searchMatch =
-          recipe.name.toLowerCase().includes(search);
-
-        return categoryMatch && searchMatch;
-
-      })
-      .sort((a, b) =>
-        a[1].name.localeCompare(b[1].name)
-      );
-
-  if (matches.length === 0) {
-
-    grid.innerHTML =
-      `<p class="info">No recipes found.</p>`;
+    alert("Enter a valid quantity.");
 
     return;
   }
 
-  grid.innerHTML =
-    matches.map(([key, recipe]) => {
+  const recipe = recipes[key];
 
-      return `
-        <div
-          class="recipe-card"
-          onclick="selectRecipe('${key}')"
-        >
-          <strong>${escapeHtml(recipe.name)}</strong>
+  const results = Object.entries(
+    recipe.materials
+  );
 
-          <span>
-            Makes ${recipe.output}
-          </span>
-        </div>
-      `;
+  const html = `
+    <h3>
+      ${quantity} × ${recipe.name}
+    </h3>
 
-    }).join("");
+    <p>
+      Edition: ${edition}
+    </p>
+
+    ${results.map(([name, amount]) => `
+      <div class="result-row">
+        <span>${name}</span>
+        <span class="amount">
+          ${amount * quantity}
+        </span>
+      </div>
+    `).join("")}
+  `;
+
+  document.getElementById("results").innerHTML =
+    html;
+
+  document.getElementById("results").style.display =
+    "block";
 
 }
 
 
-/* =========================================================
-   CATEGORY FILTER
-   ========================================================= */
+function setEdition(value, button) {
 
-function setCategory(category, button) {
-
-  currentCategory = category;
+  edition = value;
 
   document
-    .querySelectorAll(".category-buttons button")
-    .forEach(btn => btn.classList.remove("active"));
+    .querySelectorAll(".editions button")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
 
   button.classList.add("active");
 
-  renderRecipes();
+}
+
+
+function renderRecipes(filter = "") {
+
+  const grid =
+    document.getElementById("recipes");
+
+  const items =
+    Object.entries(recipes)
+      .filter(([key, recipe]) =>
+        recipe.name
+          .toLowerCase()
+          .includes(filter.toLowerCase())
+      )
+      .slice(0, 12);
+
+  grid.innerHTML =
+    items.map(([key, recipe]) => `
+
+      <div class="card">
+
+        <h3>${recipe.name}</h3>
+
+        <p>
+          ${Object.keys(recipe.materials)
+            .slice(0,3)
+            .join(" · ")}
+        </p>
+
+        <button
+          onclick="selectRecipe('${key}')"
+        >
+          Calculate
+        </button>
+
+      </div>
+
+    `).join("");
 
 }
 
 
-/* =========================================================
-   SELECT RECIPE FROM GRID
-   ========================================================= */
-
 function selectRecipe(key) {
 
-  document.getElementById("item").value = key;
+  document.getElementById("item").value =
+    key;
 
-  document.getElementById("quantity").value = 1;
+  document.getElementById("quantity").value =
+    1;
 
   document
-    .getElementById("calculator")
+    .querySelector(".panel")
     .scrollIntoView({
       behavior: "smooth"
     });
 
-  calculateResources();
+  calculate();
 
 }
 
 
-/* =========================================================
-   STACK CALCULATOR
-   ========================================================= */
+function searchSite() {
 
-function calculateStacks() {
+  const query =
+    document.getElementById("mainSearch")
+      .value
+      .trim();
 
-  const amount =
-    Number(document.getElementById("stackAmount").value);
-
-  if (!Number.isFinite(amount) || amount < 1) {
-
-    alert("Enter a valid amount.");
-
-    return;
-  }
-
-  const stacks =
-    Math.floor(amount / 64);
-
-  const remainder =
-    amount % 64;
-
-  let message =
-    `${formatNumber(amount)} items = `;
-
-  if (stacks > 0) {
-
-    message +=
-      `${stacks} full stack${stacks === 1 ? "" : "s"}`;
-
-  }
-
-  if (remainder > 0) {
-
-    if (stacks > 0) {
-
-      message += ` + ${remainder} extra`;
-
-    } else {
-
-      message += `${remainder} items`;
-
-    }
-
-  }
-
-  document.getElementById("stackResult").textContent =
-    message;
+  renderRecipes(query);
 
 }
 
 
-/* =========================================================
-   COPY RESULTS
-   ========================================================= */
+function openTutorial(url) {
 
-function copyResults() {
-
-  if (!lastResults.length) {
-
-    return;
-  }
-
-  const title =
-    document.getElementById("resultTitle").textContent;
-
-  const text =
-    title +
-    "\n\n" +
-    lastResults
-      .map(([name, amount]) =>
-        `${name}: ${formatNumber(amount)}`
-      )
-      .join("\n") +
-    "\n\nCalculated with CraftCalc.";
-
-  navigator.clipboard
-    .writeText(text)
-    .then(() => {
-
-      alert("Results copied!");
-
-    })
-    .catch(() => {
-
-      alert("Could not copy automatically.");
-
-    });
-
-}
-
-
-/* =========================================================
-   SHARE
-   ========================================================= */
-
-function shareCalculator() {
-
-  const url =
-    window.location.href;
-
-  if (navigator.share) {
-
-    navigator.share({
-      title: "CraftCalc",
-      text: "Minecraft Resource Calculator",
-      url: url
-    });
-
-  } else {
-
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-
-        alert("Website link copied!");
-
-      });
-
-  }
-
-}
-
-
-/* =========================================================
-   DARK MODE
-   ========================================================= */
-
-function toggleTheme() {
-
-  document.body.classList.toggle("dark");
-
-  const isDark =
-    document.body.classList.contains("dark");
-
-  localStorage.setItem(
-    "craftcalc-theme",
-    isDark ? "dark" : "light"
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
   );
-
-}
-
-
-/* =========================================================
-   UTILITIES
-   ========================================================= */
-
-function formatNumber(number) {
-
-  return Number(number)
-    .toLocaleString();
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   LOAD SAVED THEME
-   ========================================================= */
-
-if (
-  localStorage.getItem("craftcalc-theme") === "dark"
-) {
-
-  document.body.classList.add("dark");
 
 }
 
